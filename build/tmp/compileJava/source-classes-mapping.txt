@@ -1,0 +1,34 @@
+FileTransfer/FileTransferProcessesController.java
+ FileTransfer.FileTransferProcessesController
+FileTransfer/FileTransferSplashScreenController.java
+ FileTransfer.FileTransferSplashScreenController
+FileTransfer/UIController.java
+ FileTransfer.UIController
+FileTransfer/UITask.java
+ FileTransfer.UITask
+FileTransfer/FileStructure.java
+ FileTransfer.DirectoryInstance
+ FileTransfer.FileInstance
+ FileTransfer.FileStructure
+ FileTransfer.FileStructure$FileDiscoverer
+ FileTransfer.FileStructureInstance
+FileTransfer/Client.java
+ FileTransfer.Client
+ FileTransfer.FileTransferManager
+ FileTransfer.FileTransferProcess
+FileTransfer/FileTransferController.java
+ FileTransfer.FileTransferController
+ FileTransfer.FileTransferController$1
+ FileTransfer.FileTransferController$1$1
+ FileTransfer.FileTransferController$1$2
+ FileTransfer.FileTransferController$2
+FileTransfer/FileTransferLoginController.java
+ FileTransfer.FileTransferLoginController
+ FileTransfer.FileTransferLoginController$1
+FileTransfer/Main.java
+ FileTransfer.DeveloperConsole
+ FileTransfer.Main
+ FileTransfer.Main$1
+ FileTransfer.Main$2
+ FileTransfer.Main$3
+ FileTransfer.Main$3$1
