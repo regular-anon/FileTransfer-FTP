@@ -10,52 +10,11 @@ public class FileStructure
 {
     static DirectoryInstance rootDirectory = new DirectoryInstance("");
     static DirectoryInstance currentDirectory = rootDirectory;
-//    public static HashMap<String, DirectoryInstance> directoryMap;
-//    public static void createStructure(DirectoryInstance dir, FTPClient ftp) {
-//        try {
-//            String path = dir.getPath() + "/";
-//            ftp.changeWorkingDirectory(path);
-//            FTPFile[] contents = ftp.listFiles();
-//            System.out.println("Listing contents for directory: " + dir.getName());
-//            for(int i = 0;i < contents.length;++i)
-//            {
-//                if(contents[i].isFile())
-//                {
-//                    FileInstance newFile = new FileInstance(path + contents[i].getName());
-//                    dir.addItem(newFile);
-//                    System.out.println(newFile.getName());
-//                }
-//                else if(contents[i].isDirectory())
-//                {
-//                    DirectoryInstance newDirectory = new DirectoryInstance(path + contents[i].getName());
-//                    createStructure(newDirectory, ftp);
-//                    dir.addItem(newDirectory);
-//                    System.out.println(newDirectory.getName());
-//                }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
     public static void init2() throws IOException {
         rootDirectory.parentDirectory = rootDirectory;
         assignContents(rootDirectory, Client.getFTPClient());
     }
-
-//    static DirectoryInstance getSubdirectoryByName(DirectoryInstance dir, String name) throws IOException {
-//        DirectoryInstance subDir = null;
-//        if(!dir.hasContent)
-//            assignContents(dir, Client.getFTPClient());
-//        for(int i = 0;i < dir.getContents().size();++i)
-//        {
-//            if(dir.getContents().get(i) instanceof DirectoryInstance)
-//            {
-//                if(dir.getContents().get(i).getName().equals(name))
-//                    subDir = (DirectoryInstance) dir.getContents().get(i);
-//            }
-//        }
-//        return subDir;
-//    }
 
     static void cd (String rp) throws Exception {
         currentDirectory = (DirectoryInstance)search(rp);
@@ -91,35 +50,6 @@ public class FileStructure
         }
         return current;
     }
-
-//    static DirectoryInstance getDirectory(String rp) throws Exception {
-//        DirectoryInstance current = currentDirectory;
-//        if(rp.charAt(0) == '/')
-//        {
-//            if(rp.length() == 1)
-//            {
-//                current = rootDirectory;
-//                return current;
-//            }
-//            current = rootDirectory;
-//            rp = rp.substring(1);
-//        }
-//        String[] path = rp.split("/");
-//        for(int i = 0;i < path.length;++i)
-//        {
-//            if(path[i].equals("..")) {
-//                current = current.parentDirectory;
-//                continue;
-//            }
-//            DirectoryInstance nextDir = (DirectoryInstance)searchInContentsOfDirectory(current, path[i]);//getSubdirectoryByName(current, path[i]);
-//            if(nextDir == null)
-//                throw new Exception("File not found with path: " + rp);
-//            if(!nextDir.hasContent)
-//                assignContents(nextDir, Client.getFTPClient());
-//            current = nextDir;
-//        }
-//        return current;
-//    }
 
     static FileStructureInstance searchInContentsOfDirectory(DirectoryInstance dir, String name)
     {
@@ -159,8 +89,6 @@ public class FileStructure
         }
         dir.hasContent = true;
     }
-    //Creates the whole file structure of the ftp server. Takes a lot of time if there are many files.
-    //Solution: build structure as the user navigates the files and directories
     private static void initStructure(DirectoryInstance dir, FTPClient ftp) throws IOException {
         ftp.changeWorkingDirectory("/" + dir.getPath());
         FTPFile[] files = ftp.listFiles();

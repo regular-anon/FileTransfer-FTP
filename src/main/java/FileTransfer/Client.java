@@ -135,19 +135,11 @@ public class Client {
         {
             newFile = new File(downloadsPath + "/" + fileName.substring(0, index) + i++ + fileName.substring(index));
         }
-//        File f = new File(downloadsPath + "/" + fileName.substring(0, index) + "filetransferdownload");
-//        while(f.exists())
-//        {
-//            f = new File(downloadsPath + "/" + fileName.substring(0, index) + i++ + "filetransferdownload");
-//        }
         if(fi.getSize() > new File(downloadsPath).getFreeSpace())
         {
             System.out.printf("remote file size: %d\nFree space on pc: %d", fi.getSize(), new File(downloadsPath).getFreeSpace());
             throw new IOException("Not enough free space!");
         }
-//        if(newFile.exists())
-//            newFile.createNewFile();
-//        f.createNewFile();
         FileTransferProcess fp =  new FileTransferProcess(true, newFile, fi.getPath());
         fp.setId(FileTransferProcessesController.instance.addProcess(newFile.getName(), ((FileInstance)(FileStructure.search(fp.getRemotePath()))).getSize()));
         FileTransferManager.instance.addProcess(fp);
@@ -172,7 +164,6 @@ class FileTransferProcess
 {
     private boolean download;
     private File file;
-    //private boolean isExecuting;
     private boolean done;
     private int failedAttempts;
 
@@ -183,7 +174,6 @@ class FileTransferProcess
     {
         this.download = bool;
         this.file = f;
-        //isExecuting = false;
         done = false;
         failedAttempts = 0;
         this.remotePath = remotePath;
@@ -202,10 +192,6 @@ class FileTransferProcess
     {
         return done;
     }
-//    public boolean isExecuting()
-//    {
-//        return isExecuting;
-//    }
     public int failedTries()
     {
         return failedAttempts;
@@ -235,20 +221,6 @@ class FileTransferProcess
     {
 
     }
-//    @Override
-//    public void run()
-//    {
-//        isExecuting = true;
-//        try {
-//            Client.getFTPClient().storeFile(FileStructure.currentDirectory.getPath(), new FileInputStream(file));
-//            done = true;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        finally {
-//            isExecuting = false;
-//        }
-//    }
 }
 
 class FileTransferManager implements Runnable
@@ -331,7 +303,6 @@ class FileTransferManager implements Runnable
                     System.out.print("upload ");
                 System.out.println(fp.getFile().getName());
                 processes.remove(fp);
-//                FileTransferProcessesController.instance.removeProcess(fp.getId());
                 continue;
             }
             if(fp.isDownload())
@@ -345,7 +316,6 @@ class FileTransferManager implements Runnable
                     continue;
                 }
                 processes.remove(fp);
-//                FileTransferProcessesController.instance.removeProcess(fp.getId());
             }
             else
             {
@@ -361,7 +331,6 @@ class FileTransferManager implements Runnable
                     e.printStackTrace();
                 }
                 processes.remove(fp);
-//                FileTransferProcessesController.instance.removeProcess(fp.getId());
             }
         }
         isRunning = false;

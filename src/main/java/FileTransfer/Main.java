@@ -18,16 +18,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Scanner;
-
-
-//TODO : Fix bug in file navigation (UITask)
-
-
 
 public class Main extends Application{
 
@@ -49,24 +43,12 @@ public class Main extends Application{
                 Main.exit();
             }
         });
-//        loginStage.setOnHidden(new EventHandler<WindowEvent>() {
-//            public void handle(WindowEvent we) {
-//                System.out.println("Login Stage is closing2");
-//                Main.exit();
-//            }
-//        });
         mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 System.out.println("Main Stage is closing");
                 Main.exit();
             }
         });
-//        mainStage.setOnHidden(new EventHandler<WindowEvent>() {
-//            public void handle(WindowEvent we) {
-//                System.out.println("Main Stage is closing2");
-//                Main.exit();
-//            }
-//        });
 
         splashStage.getIcons().add(new Image("Photos/cloud.png"));
         UIController.setVisible("FileTransfer Splash Screen");
@@ -147,7 +129,6 @@ public class Main extends Application{
         }
         UIController.closeAllStages();
         System.exit(0);
-        //throw new RuntimeException("Close program");
     }
 
     @Override
@@ -169,14 +150,7 @@ public class Main extends Application{
      */
     public static void main(String[] args)
     {
-//        Alert alert = new Alert(Alert.AlertType.WARNING, "Files are still being downloaded!", ButtonType.CANCEL, ButtonType.FINISH);
-//        alert.setTitle("Warning!");
-//        alert.setHeaderText("File are still being transfered!");
-//        alert.setContentText("Are you sure you want to exit now? Every transfer will be aborted!");
-//        alert.showAndWait();
-
         new Thread(new DeveloperConsole()).start();
-
         launch(args);
     }
 }
@@ -185,7 +159,6 @@ public class Main extends Application{
 class DeveloperConsole implements Runnable
 {
     Scanner sc;
-    //DirectoryInstance currentDirectory = FileStructure.getRootDirectory();
     public void run()
     {
         System.out.println("Developer console started.");
