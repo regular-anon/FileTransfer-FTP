@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<LanguageList>
+    
+    <Language id="EN" fullName="English">
+        <TitleSubText>Quick and Simple!</TitleSubText>
+        <Download>Download</Download>
+        <Upload>Upload</Upload>
+        <Preferences>Preferences</Preferences>
+    </Language>
+    
+    <Language id="RO" fullName="Romana">
+        <TitleSubText>Simplu si Rapid!</TitleSubText>
+        <Download>Descarcati</Download>
+        <Upload>Incarcati</Upload>
+        <Preferences>Preferinte</Preferences>
+    </Language>
+    
+    <Language id="FR" fullName="Français">
+        <TitleSubText>Rapide et simple!</TitleSubText>
+        <Download>↓ Télécharger</Download>
+        <Upload>↑ Télécharger</Upload>
+        <Preferences>Preferinte</Preferences>
+    </Language>
+    
+    <Language id="DE" fullName="Deutsche">
+        <TitleSubText>Schnell und einfach!</TitleSubText>
+        <Download>Herunterladen</Download>
+        <Upload>Hochladen</Upload>
+        <Preferences>Einstellungen</Preferences>
+    </Language>
+</LanguageList>

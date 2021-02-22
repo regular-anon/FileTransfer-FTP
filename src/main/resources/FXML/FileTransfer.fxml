@@ -17,6 +17,11 @@
    <children>
       <MenuBar>
         <menus>
+            <Menu mnemonicParsing="false" text="">
+                <graphic>
+                    <Label fx:id="languageButtonLabel" text="" onMouseClicked="#languageButtonClicked"/>
+                </graphic>
+            </Menu>
           <Menu mnemonicParsing="false" text="Preferences">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#modifyDownloadsDirectory" text="Modify Download Directory" />
@@ -43,7 +48,7 @@
             </Label>
          </children>
       </HBox>
-      <Label alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="270.0" text="Quick and simple !">
+      <Label id="TitleSubText" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="270.0" text="Quick and simple !">
          <font>
             <Font size="14.0" />
          </font>

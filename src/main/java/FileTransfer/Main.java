@@ -25,7 +25,7 @@ import java.util.Scanner;
 
 public class Main extends Application{
 
-    public static Stage mainStage, loginStage, processesStage, splashStage;
+    public static Stage mainStage, loginStage, processesStage, splashStage, settingsStage;
 
     public Main() throws IOException
     {
@@ -33,8 +33,9 @@ public class Main extends Application{
         mainStage = openStageByFileName("FileTransfer.fxml", "FileTransfer", true);
         processesStage = openStageByFileName("FileTransferProcesses.fxml", "FileTransfer Processes", true);
         splashStage = openStageByFileName("FileTransferSplashScreen.fxml", "FileTransfer Splash Screen", false);
+        settingsStage = openStageByFileName("FileTransferSettings.fxml", "FileTransfer Settings", true);
 
-        UIController.addStage(loginStage, mainStage, processesStage, splashStage);
+        UIController.addStage(loginStage, mainStage, processesStage, splashStage, settingsStage);
 
         loginStage.setResizable(false);
         loginStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -97,7 +98,8 @@ public class Main extends Application{
         System.out.println("Trying to exit application");
         if(Client.isConnected())
         {
-            if(FileTransferManager.instance.isRunning())
+            System.out.println("But client is connected!!");
+            if(FileTransferManager.instance != null && FileTransferManager.instance.isRunning())
             {
                 //Alert user
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Files are still being downloaded!", ButtonType.CANCEL, ButtonType.FINISH);
@@ -117,14 +119,20 @@ public class Main extends Application{
                 }
                 else
                 {
-                    try {
-                        Client.close();
-                        UIController.closeAllStages();
-                        System.exit(0);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    return;
                 }
+            }
+            else
+            {
+                System.out.println("transfer manager is not running, but trying to disconnect...");
+                try {
+                    Client.close();
+                    UIController.closeAllStages();
+                    System.exit(0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Done disconnecting...");
             }
         }
         UIController.closeAllStages();

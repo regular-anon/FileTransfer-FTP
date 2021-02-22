@@ -45,7 +45,7 @@ public class Client {
         Client.user = user;
         Client.password = password;
         try {
-            pw = new PrintWriter(new FileWriter("src/main/resources/Logs/FtpClientLogs.txt", true));
+            pw = new PrintWriter(new FileWriter("src/main/resources/Other/FtpClientLogs.txt", true));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,6 +62,7 @@ public class Client {
                 ftp.disconnect();
                 throw new IOException("Exception in connecting to FTP Server");
             }
+            ftp.setControlKeepAliveTimeout(5);
             connected = true;
     }
 
@@ -101,6 +102,7 @@ public class Client {
     }
 
     public static void close() throws Exception {
+        System.out.println("Closing FTP Client...");
         try {
             ftp.logout();
             ftp.disconnect();
@@ -110,6 +112,7 @@ public class Client {
             ftp = null;
             connected = false;
         }
+        System.out.println("Done closing!");
     }
     public static FTPClient getFTPClient()
     {

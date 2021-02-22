@@ -1,17 +1,14 @@
 FileTransfer/FileTransferProcessesController.java
  FileTransfer.FileTransferProcessesController
-FileTransfer/FileTransferSplashScreenController.java
- FileTransfer.FileTransferSplashScreenController
-FileTransfer/UIController.java
- FileTransfer.UIController
-FileTransfer/UITask.java
- FileTransfer.UITask
 FileTransfer/FileStructure.java
  FileTransfer.DirectoryInstance
  FileTransfer.FileInstance
  FileTransfer.FileStructure
- FileTransfer.FileStructure$FileDiscoverer
  FileTransfer.FileStructureInstance
+FileTransfer/UIController.java
+ FileTransfer.UIController
+ FileTransfer.UIController$1
+ FileTransfer.UIController$2
 FileTransfer/Client.java
  FileTransfer.Client
  FileTransfer.FileTransferManager
@@ -19,9 +16,12 @@ FileTransfer/Client.java
 FileTransfer/FileTransferController.java
  FileTransfer.FileTransferController
  FileTransfer.FileTransferController$1
- FileTransfer.FileTransferController$1$1
- FileTransfer.FileTransferController$1$2
  FileTransfer.FileTransferController$2
+ FileTransfer.FileTransferController$2$1
+ FileTransfer.FileTransferController$2$2
+ FileTransfer.FileTransferController$3
+FileTransfer/UITask.java
+ FileTransfer.UITask
 FileTransfer/FileTransferLoginController.java
  FileTransfer.FileTransferLoginController
  FileTransfer.FileTransferLoginController$1
@@ -32,3 +32,9 @@ FileTransfer/Main.java
  FileTransfer.Main$2
  FileTransfer.Main$3
  FileTransfer.Main$3$1
+FileTransfer/FileTransferSplashScreenController.java
+ FileTransfer.FileTransferSplashScreenController
+FileTransfer/FileTransferSettingsController.java
+ FileTransfer.FileTransferSettingsController
+ FileTransfer.FileTransferSettingsController$1
+ FileTransfer.Language

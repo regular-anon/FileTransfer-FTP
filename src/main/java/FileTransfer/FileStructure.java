@@ -61,13 +61,9 @@ public class FileStructure
         }
         return fsi;
     }
+
     //Puts the files and subdirectories of a folder in it's list
     public static void assignContents(DirectoryInstance dir, FTPClient ftp) throws IOException {
-        try {
-            Thread.sleep(2500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         if(dir.hasContent)
             dir.getContents().clear();
@@ -109,17 +105,17 @@ public class FileStructure
         }
     }
 
-    static class FileDiscoverer implements Runnable
-    {
-        public void run()
-        {
-            try {
-                FileStructure.initStructure(FileStructure.rootDirectory, Client.getFTPClient());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    static class FileDiscoverer implements Runnable
+//    {
+//        public void run()
+//        {
+//            try {
+//                FileStructure.initStructure(FileStructure.rootDirectory, Client.getFTPClient());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 }
 

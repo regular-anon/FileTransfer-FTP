@@ -85,21 +85,30 @@ public final class UIController
         }
     }
 
-    public static void removeStage(String s)
-    {
-        stageMap.remove(s);
+    public static HashMap<String, Stage> getStages() {
+        return stageMap;
     }
 
     public static void hideStage(String s)
     {
-        System.out.println(stageMap.get(s).getTitle() + " set to hidden.");
-        stageMap.get(s).hide();
+        Platform.runLater(new Runnable(){
+
+            @Override
+            public void run() {
+                stageMap.get(s).hide();
+            }
+        });
     }
 
     public static void setVisible(String s)
     {
-        System.out.println(stageMap.get(s).getTitle() + " set to visible.");
-        stageMap.get(s).show();
+        Platform.runLater(new Runnable(){
+
+            @Override
+            public void run() {
+                stageMap.get(s).show();
+            }
+        });
     }
     //Removes a stage from the list
     //If there are no stages left, exit

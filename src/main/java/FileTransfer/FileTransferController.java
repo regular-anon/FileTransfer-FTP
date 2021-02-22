@@ -3,8 +3,10 @@ package FileTransfer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,7 +31,8 @@ public class FileTransferController implements Initializable {
     public Button downloadButton;
     public Button searchButton;
     public TextField searchField;
-    public Menu runningProcessesButton;
+    public Label languageButtonLabel;
+    //    public Menu runningProcessesButton;
     @FXML
     private ListView list;
     private static boolean standby;
@@ -58,14 +61,26 @@ public class FileTransferController implements Initializable {
     {
         //Modify UI
         standby = false;
+        currentTask = null;
     }
 
 
     //@Override
     public void initialize(URL location, ResourceBundle resourceBundle)
     {
-        System.out.println("FileTransferController class has been initialized!!!");
         instance = this;
+        Image img = new Image("Photos/language.png");
+        languageButtonLabel.setText("");
+        ImageView imgView = new ImageView(img);
+        imgView.setPreserveRatio(true);
+        imgView.setFitHeight(20);
+        languageButtonLabel.setGraphic(imgView);
+        languageButtonLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                UIController.setVisible("FileTransfer Settings");
+            }
+        });
         list.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent click)
@@ -295,5 +310,9 @@ public class FileTransferController implements Initializable {
     public void showProcesses(ActionEvent actionEvent) {
         System.out.println("Showing FileTransfer Processes");
         UIController.setVisible("FileTransfer Processes");
+    }
+
+    public void languageButtonClicked(MouseEvent mouseEvent) {
+        System.out.println("Language button clicked from label");
     }
 }
