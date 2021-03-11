@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -77,6 +78,23 @@
             <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" text="Clear" />
             <Label prefHeight="17.0" prefWidth="56.0" />
             <Button fx:id="connectButton" mnemonicParsing="false" onAction="#tryConnecting" text="Connect!" />
+         </children>
+      </HBox>
+      <HBox prefHeight="27.0" prefWidth="507.0">
+         <children>
+            <AnchorPane prefHeight="27.0" prefWidth="506.0">
+               <children>
+                  <Button fx:id="languageButton" ellipsisString="" mnemonicParsing="false" onAction="#displaySettings" prefHeight="25.0" prefWidth="28.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="9.0">
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0">
+                           <image>
+                              <Image url="@../Photos/language.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
       </HBox>
    </children>

@@ -1,11 +1,23 @@
+//plugins {
+//    id 'application'
+//    id 'org.openjfx.javafxplugin' version '0.0.9'
+//}
+//
+//javafx {
+//    version = "8.0.1";
+//}
+
 apply plugin: 'java'
 apply plugin: 'application'
+//apply plugin: 'idea' //////////
 
 
 mainClassName = 'FileTransfer.Main'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
+
+
 
 repositories {
     mavenCentral()
@@ -17,6 +29,8 @@ dependencies {
 //    compile 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
     compile 'commons-net:commons-net:3.7.2'
 }
+
+
 
 jar {
     manifest {

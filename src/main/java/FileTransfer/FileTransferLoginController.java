@@ -1,14 +1,8 @@
 package FileTransfer;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -97,13 +91,11 @@ public class FileTransferLoginController  implements Initializable {
                     FileTransferManager.init();
                 } catch (IOException e) {
                     e.printStackTrace();
-
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Dialog");
                     alert.setHeaderText("Could not init the file structure.");
                     alert.setContentText(e.getMessage());
                     alert.showAndWait();
-
                     return;
                 }
                 System.out.println("Controller: Initiated FileStructure");
@@ -112,11 +104,8 @@ public class FileTransferLoginController  implements Initializable {
             public void execFinal() throws Exception {
                 UIController.hideStage("FileTransfer Login");
                 UIController.setVisible("FileTransfer");
-
                 //Exit standby mode
                 cancelUITask();
-
-
             }
 
             @Override public void run()
@@ -197,5 +186,9 @@ public class FileTransferLoginController  implements Initializable {
         hostField.setText("");
         usernameField.setText("");
         passwordField.setText("");
+    }
+
+    public void displaySettings(ActionEvent actionEvent) {
+        UIController.setVisible("FileTransfer Settings");
     }
 }

@@ -6,6 +6,10 @@
         <Download>Download</Download>
         <Upload>Upload</Upload>
         <Preferences>Preferences</Preferences>
+        <SearchButton>Search!</SearchButton>
+        <TransferMenuButton>Transfers</TransferMenuButton>
+        <SettingsTitle>Settings</SettingsTitle>
+        <SettingsLanguage>Language</SettingsLanguage>
     </Language>
     
     <Language id="RO" fullName="Romana">
@@ -13,13 +17,21 @@
         <Download>Descarcati</Download>
         <Upload>Incarcati</Upload>
         <Preferences>Preferinte</Preferences>
+        <SearchButton>Cauta</SearchButton>
+        <TransferMenuButton>Transferuri</TransferMenuButton>
+        <SettingsTitle>Configurari</SettingsTitle>
+        <SettingsLanguage>Limbă</SettingsLanguage>
     </Language>
     
     <Language id="FR" fullName="Français">
         <TitleSubText>Rapide et simple!</TitleSubText>
         <Download>↓ Télécharger</Download>
         <Upload>↑ Télécharger</Upload>
-        <Preferences>Preferinte</Preferences>
+        <Preferences>Préférences</Preferences>
+        <SearchButton>Chercher</SearchButton>
+        <TransferMenuButton>Transferts</TransferMenuButton>
+        <SettingsTitle>Réglages</SettingsTitle>
+        <SettingsLanguage>Langue</SettingsLanguage>
     </Language>
     
     <Language id="DE" fullName="Deutsche">
@@ -27,5 +39,9 @@
         <Download>Herunterladen</Download>
         <Upload>Hochladen</Upload>
         <Preferences>Einstellungen</Preferences>
+        <SearchButton>Suchen</SearchButton>
+        <TransferMenuButton>Transfers</TransferMenuButton>
+        <SettingsTitle>Einstellungen</SettingsTitle>
+        <SettingsLanguage>Sprache</SettingsLanguage>
     </Language>
 </LanguageList>

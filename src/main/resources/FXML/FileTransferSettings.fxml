@@ -13,7 +13,7 @@
       <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="600.0">
          <children>
             <Label prefHeight="17.0" prefWidth="65.0" />
-            <Label text="SETTINGS">
+            <Label id="SettingsTitle" text="SETTINGS">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
@@ -24,7 +24,7 @@
       <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="600.0">
          <children>
             <Label prefHeight="17.0" prefWidth="33.0" />
-            <Label text="Language">
+            <Label id="SettingsLanguage" text="Language">
                <font>
                   <Font size="15.0" />
                </font>

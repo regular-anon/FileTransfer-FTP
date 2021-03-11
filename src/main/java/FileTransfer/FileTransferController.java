@@ -1,22 +1,27 @@
 package FileTransfer;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
+import javafx.util.Duration;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +37,8 @@ public class FileTransferController implements Initializable {
     public Button searchButton;
     public TextField searchField;
     public Label languageButtonLabel;
+    public Menu menuPreferences;
+    public ImageView dropImage;
     //    public Menu runningProcessesButton;
     @FXML
     private ListView list;
@@ -66,8 +73,10 @@ public class FileTransferController implements Initializable {
 
 
     //@Override
-    public void initialize(URL location, ResourceBundle resourceBundle)
-    {
+    public void initialize(URL location, ResourceBundle resourceBundle) {
+        dropImage.setOpacity(0);
+//        imageViewProfile.imageProperty().unbind();
+        menuPreferences.textProperty().unbind();
         instance = this;
         Image img = new Image("Photos/language.png");
         languageButtonLabel.setText("");
@@ -83,46 +92,40 @@ public class FileTransferController implements Initializable {
         });
         list.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent click)
-            {
+            public void handle(MouseEvent click) {
                 if (click.getClickCount() == 2) {
                     String str;
                     Object obj = list.getSelectionModel().getSelectedItem();
-                        HBox box = (HBox)obj;
-                        str = ((Label)box.getChildren().get(2)).getText();
-                    if(str == null || str == "")
+                    HBox box = (HBox) obj;
+                    str = ((Label) box.getChildren().get(2)).getText();
+                    if (str == null || str == "")
                         return;
                     try {
                         UITask newTask;
-                        if(str.equals(".."))
-                        {
+                        if (str.equals("..")) {
                             newTask = new UITask() {
                                 public void exec() throws Exception {
                                     System.out.println("Exec method of .. directory change.");
                                 }
-                                public void execFinal() throws Exception
-                                {
+
+                                public void execFinal() throws Exception {
                                     System.out.println("Started execFinal on ..");
                                     FileStructure.cd("..");
                                     showDirectory(FileStructure.currentDirectory);
                                     System.out.println("Finished execFinal on ..");
                                 }
                             };
-                        }
-                        else
-                        {
+                        } else {
                             newTask = new UITask() {
-                                public void exec() throws Exception
-                                {
+                                public void exec() throws Exception {
                                     System.out.println("Started exec on changing directory");
-                                    DirectoryInstance nextDir = (DirectoryInstance)FileStructure.searchInContentsOfDirectory(FileStructure.currentDirectory, str);
-                                    if(!nextDir.hasContent)
+                                    DirectoryInstance nextDir = (DirectoryInstance) FileStructure.searchInContentsOfDirectory(FileStructure.currentDirectory, str);
+                                    if (!nextDir.hasContent)
                                         FileStructure.assignContents(nextDir, Client.getFTPClient());
                                     System.out.println("Finished exec on changing directory");
                                 }
 
-                                public void execFinal() throws Exception
-                                {
+                                public void execFinal() throws Exception {
                                     System.out.println("Started execFinal on changing directory");
                                     FileStructure.cd(FileStructure.currentDirectory.getPath() + "/" + str);
                                     showDirectory(FileStructure.currentDirectory);
@@ -142,6 +145,83 @@ public class FileTransferController implements Initializable {
                 }
             }
         });
+        list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        list.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                if (event.getGestureSource() != list && event.getDragboard().hasFiles()) {
+                    event.acceptTransferModes(TransferMode.COPY);
+
+//                    dropImage.setOpacity(1);
+                    FadeTransition ft = new FadeTransition();
+                    ft.setNode(dropImage);
+                    ft.setDuration(Duration.millis(100));
+                    ft.setFromValue(dropImage.getOpacity());
+                    ft.setToValue(1.0);
+//                    ft.setCycleCount(6);
+                    ft.setAutoReverse(false);
+
+                    ft.play();
+                }
+                //Modify ui
+                event.consume();
+            }
+        });
+
+        list.setOnDragExited(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+//                dropImage.setOpacity(0);
+                FadeTransition ft = new FadeTransition();
+                ft.setNode(dropImage);
+                ft.setDuration(Duration.millis(100));
+                ft.setFromValue(dropImage.getOpacity());
+                ft.setToValue(0.0);
+//                ft.setCycleCount(6);
+                ft.setAutoReverse(false);
+
+                ft.play();
+            }
+        });
+
+        list.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                if (event.getGestureSource() != list && event.getDragboard().hasFiles()) {
+//                    dropImage.setOpacity(0);
+                    FadeTransition ft = new FadeTransition();
+                    ft.setNode(dropImage);
+                    ft.setDuration(Duration.millis(100));
+                    ft.setFromValue(dropImage.getOpacity());
+                    ft.setToValue(0.0);
+//                    ft.setCycleCount(6);
+                    ft.setAutoReverse(false);
+
+                    ft.play();
+                    for (File f : event.getDragboard().getFiles()) {
+                        try {
+                            Client.upload(f);
+                        } catch (IOException e) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error Dialog");
+                            alert.setHeaderText("Could not download file");
+                            alert.setContentText(e.getMessage());
+                            alert.showAndWait();
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+
+
+        //Set context menus for file deletion
+//        list.setCellFactory(new Callback<ListView, ListCell>() {
+//            @Override
+//            public ListCell call(ListView param) {
+//                return null;
+//            }
+//        });
     }
 
     public void showDirectory(DirectoryInstance dir)
@@ -197,14 +277,12 @@ public class FileTransferController implements Initializable {
         return box;
     }
 
-    public void upload(ActionEvent actionEvent)
-    {
+    public void uploadPress(ActionEvent actionEvent) {
         FileDialog d = new FileDialog((java.awt.Frame) null);
         d.setVisible(true);
         File[] files;// = {new File("")};
         files = d.getFiles();
-        for(int i = 0;i < files.length;++i)
-        {
+        for (int i = 0; i < files.length; ++i) {
             try {
                 Client.upload(files[i]);
             } catch (IOException e) {
@@ -218,7 +296,7 @@ public class FileTransferController implements Initializable {
         }
     }
 
-    public void download(ActionEvent actionEvent)
+    public void downloadPress(ActionEvent actionEvent)
     {
         HBox box = (HBox) list.getSelectionModel().getSelectedItem();
         String name;

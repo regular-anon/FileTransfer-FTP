@@ -17,7 +17,12 @@
    <children>
       <MenuBar>
         <menus>
-          <Menu mnemonicParsing="false" text="Preferences">
+            <Menu fx:id="menuPreferences" mnemonicParsing="false">
+                <graphic>
+                    <Label fx:id="languageButtonLabel" text="" onMouseClicked="#languageButtonClicked"/>
+                </graphic>
+            </Menu>
+          <Menu id="Preferences" mnemonicParsing="false" text="Preferences">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#modifyDownloadsDirectory" text="Modify Download Directory" />
             </items>
@@ -43,7 +48,7 @@
             </Label>
          </children>
       </HBox>
-      <Label alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="270.0" text="Quick and simple !">
+      <Label id="TitleSubText" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="270.0" text="Quick and simple !">
          <font>
             <Font size="14.0" />
          </font>
@@ -66,9 +71,9 @@
       <Label prefHeight="5.0" prefWidth="3.0" />
       <HBox alignment="TOP_CENTER" prefHeight="23.0" prefWidth="935.0">
          <children>
-            <Button fx:id="uploadButton" mnemonicParsing="false" onAction="#upload" text="Upload" />
+            <Button id="Upload" fx:id="uploadButton" mnemonicParsing="false" onAction="#upload" text="Upload" />
             <Label layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="136.0" />
-            <Button fx:id="downloadButton" mnemonicParsing="false" onAction="#download" text="Download" />
+            <Button id="Download" fx:id="downloadButton" mnemonicParsing="false" onAction="#download" text="Download" />
          </children>
       </HBox>
    </children>

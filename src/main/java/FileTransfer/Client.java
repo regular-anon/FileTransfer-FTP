@@ -45,6 +45,7 @@ public class Client {
         Client.user = user;
         Client.password = password;
         try {
+            System.out.println();
             pw = new PrintWriter(new FileWriter("src/main/resources/Other/FtpClientLogs.txt", true));
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,6 +53,7 @@ public class Client {
     }
     public static void connect() throws IOException {
             ftp = new FTPClient();
+            ftp.setControlEncoding("UTF-8");
             pw.write("=======================Started connection to " + server + " port " + port + " with user " + user + " and password " + password + "=======================\n");
             pw.write("Time: " + new java.util.Date(System.currentTimeMillis()).toString());
             ftp.addProtocolCommandListener(new PrintCommandListener(pw));

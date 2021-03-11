@@ -70,8 +70,10 @@ public class FileStructure
 
         ftp.changeWorkingDirectory("/" + dir.getPath());
         FTPFile[] files = ftp.listFiles();
+        System.out.println("------" + dir.getName() + "------");
         for(FTPFile f : files)
         {
+            System.out.println(f.getName());
             if(f.isDirectory())
             {
                 DirectoryInstance d = new DirectoryInstance(dir.getPath() + "/" + f.getName());
@@ -84,6 +86,7 @@ public class FileStructure
             }
         }
         dir.hasContent = true;
+        System.out.println("------------");
     }
     private static void initStructure(DirectoryInstance dir, FTPClient ftp) throws IOException {
         ftp.changeWorkingDirectory("/" + dir.getPath());

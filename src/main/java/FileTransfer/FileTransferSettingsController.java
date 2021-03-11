@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilder;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.stage.Stage;
@@ -26,20 +27,22 @@ public class FileTransferSettingsController  implements Initializable
 {
     public static NodeList languageList;
     public static ArrayList<Language> list = new ArrayList<>();
-    public static HashMap<String, Label> labelMap;
+    public static HashMap<String, Labeled> labelMap;
     public SplitMenuButton languageSelectButton;
+
+    public Language currentLanguage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        getLanguagesFromXmlFile("src/main/resources/Other/Languages.xml");
+        getLanguagesFromXmlFile("src/main/resources/Other/Languages.xml"); // ../FileTransfer/src/main/
         listLanguages();
         languageSelectButton.getItems().clear();
         for(int i = 0;i < list.size();++i) {
             Language temp = list.get(i);
             MenuItem newMenuItem = new MenuItem(temp.getName());
-            languageSelectButton.getItems().add(newMenuItem);
 
+            languageSelectButton.getItems().add(newMenuItem);
             newMenuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -47,47 +50,42 @@ public class FileTransferSettingsController  implements Initializable
                 }
             });
         }
-        System.out.println("Added languages to button");
+//        ((Labeled)(UIController.getStages().get("FileTransfer").getScene().lookup("#Preferences"))).setText("Preferinte maii");
+//        Scene s = UIController.getStages().get("FileTransfer").getScene();
+//        HashMap <>s = UIController.getStages();
     }
 
     private void changeDisplayLanguage(Language lang) {
-        System.out.println("Changing display");
         if(labelMap == null) {
-            System.out.println("labelMap is empty, so attempting to create map");
             labelMap = new HashMap<>();
             ArrayList<Stage> stageList = new ArrayList<Stage>(UIController.getStages().values());
             ArrayList<String> idList = new ArrayList<String>(lang.getMap().keySet());//(ArrayList<String>)lang.getMap().keySet();
-            System.out.println("Managed to get arraylists from maps");
-            System.out.println("StageList size: " + stageList.size());
             for(int i = 0;i < stageList.size();++i) {
                 Scene s = stageList.get(i).getScene();
-                System.out.println("Created stage with index: " + i);
                 for(int j = 0;j < idList.size();++j) {
-                    Label l = (Label)s.lookup("#" + idList.get(j));
-                    System.out.println("Got result from lookup");
+                    Labeled l = (Labeled)s.lookup("#" + idList.get(j));
                     if(l != null) {
+                        l.textProperty().unbind();
                         labelMap.put(idList.get(j), l);
                     }
                 }
             }
-            System.out.println("labelMap has been initialized");
-            System.out.println("Found all labels with their respective id's.");
-            System.out.println("Printing labels...");
-            for(String key : labelMap.keySet()) {
-                System.out.printf("Label with id %s has the text set to %s", labelMap.get(key), labelMap.get(key).getText());
-            }
         }
-        System.out.println("labelMap length: " + labelMap.size());
         for(String key : labelMap.keySet()) {
+//            labelMap.get(key).textProperty().unbind(); // < ---------
+            System.out.println("Changing from " + labelMap.get(key).getText() + " to " + lang.getWord(key));
             labelMap.get(key).setText(lang.getWord(key));
         }
-     }
+        languageSelectButton.setText(lang.getName());
 
+        currentLanguage = lang;
+     }
+    //Add other words to wordMap in this method
     private static void getLanguagesFromXmlFile(String fileName)
     {
         try {
             File file = new File(fileName);
-
+            System.out.println("Looking for languages file in " + System.getProperty("user.dir"));
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(file);

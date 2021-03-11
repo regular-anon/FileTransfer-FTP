@@ -83,7 +83,7 @@ public class Main extends Application{
         Parent root;
         Scene scene;
         Stage stage;
-        root = FXMLLoader.load(new java.io.File("src/main/resources/FXML/" + fileName).toURI().toURL());
+        root = FXMLLoader.load(new java.io.File("../FileTransfer/src/main/resources/FXML/" + fileName).toURI().toURL());
         scene = new Scene(root);
         stage = new Stage();
         stage.setTitle(title);
@@ -124,7 +124,7 @@ public class Main extends Application{
             }
             else
             {
-                System.out.println("transfer manager is not running, but trying to disconnect...");
+                System.out.println("Transfer manager is not running, but trying to disconnect...");
                 try {
                     Client.close();
                     UIController.closeAllStages();
@@ -158,7 +158,7 @@ public class Main extends Application{
      */
     public static void main(String[] args)
     {
-        new Thread(new DeveloperConsole()).start();
+//        new Thread(new DeveloperConsole()).start();
         launch(args);
     }
 }
