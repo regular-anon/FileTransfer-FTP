@@ -4,11 +4,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.io.File;
+import java.util.Scanner;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
@@ -25,18 +29,19 @@ import org.w3c.dom.Element;
 
 public class FileTransferSettingsController  implements Initializable
 {
-    public static NodeList languageList;
-    public static ArrayList<Language> list = new ArrayList<>();
-    public static HashMap<String, Labeled> labelMap;
+    public NodeList languageList;
+    public ArrayList<Language> list = new ArrayList<>();
+    public HashMap<String, Labeled> labelMap;
     public SplitMenuButton languageSelectButton;
 
     public Language currentLanguage;
 
+    public static FileTransferSettingsController instance;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        instance = this;
         getLanguagesFromXmlFile("src/main/resources/Other/Languages.xml"); // ../FileTransfer/src/main/
-        listLanguages();
         languageSelectButton.getItems().clear();
         for(int i = 0;i < list.size();++i) {
             Language temp = list.get(i);
@@ -50,16 +55,71 @@ public class FileTransferSettingsController  implements Initializable
                 }
             });
         }
+        parsePropFile();
 //        ((Labeled)(UIController.getStages().get("FileTransfer").getScene().lookup("#Preferences"))).setText("Preferinte maii");
 //        Scene s = UIController.getStages().get("FileTransfer").getScene();
 //        HashMap <>s = UIController.getStages();
     }
 
+    public void parsePropFile() {
+        System.out.println("Parsing properties file...");
+        Scanner sc = null;
+        try {
+            File f = new File("src/main/resources/Other/user_settings.txt");
+            sc = new Scanner(new java.io.FileInputStream(f));
+            while(sc.hasNextLine()) {
+                String line = sc.nextLine();
+                String[] p = line.split("=");
+                switch(p[0]) {
+                    case "Language":
+                        list.forEach(lang -> {
+                            if(lang.getName().equals(p[1])) {
+                                changeDisplayLanguage(lang);
+                            }
+                        });
+                }
+            }
+        }
+        catch(FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Properties file not found!");
+        }
+        finally {
+            if(sc != null) {
+                sc.close();
+            }
+        }
+    }
+
+    public void saveSettings() {
+        System.out.println("Saving prop file...");
+        FileWriter fw = null;
+        try {
+            File f = new File("src/main/resources/Other/user_settings.txt");
+            fw = new FileWriter(f);
+            fw.write("Language=" + currentLanguage.getName());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fw != null) {
+                try {
+                    fw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("Failed to close file!");
+                }
+            }
+        }
+    }
+
     private void changeDisplayLanguage(Language lang) {
+        System.out.println("Changing display language to " + lang.getName());
         if(labelMap == null) {
             labelMap = new HashMap<>();
             ArrayList<Stage> stageList = new ArrayList<Stage>(UIController.getStages().values());
             ArrayList<String> idList = new ArrayList<String>(lang.getMap().keySet());//(ArrayList<String>)lang.getMap().keySet();
+            System.out.println("Stage list: " + stageList.size());
             for(int i = 0;i < stageList.size();++i) {
                 Scene s = stageList.get(i).getScene();
                 for(int j = 0;j < idList.size();++j) {
@@ -81,7 +141,7 @@ public class FileTransferSettingsController  implements Initializable
         currentLanguage = lang;
      }
     //Add other words to wordMap in this method
-    private static void getLanguagesFromXmlFile(String fileName)
+    private void getLanguagesFromXmlFile(String fileName)
     {
         try {
             File file = new File(fileName);
@@ -113,14 +173,6 @@ public class FileTransferSettingsController  implements Initializable
         }
         catch (Exception e) {
             System.out.println(e);
-        }
-    }
-
-    private static void listLanguages()
-    {
-        for(int i = 0;i < list.size();++i)
-        {
-            System.out.println(list.get(i).getName());
         }
     }
 }

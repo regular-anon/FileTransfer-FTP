@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FileTransferLoginController  implements Initializable {    
+public class FileTransferLoginController  implements Initializable {
     public TextField hostField;
     public TextField usernameField;
     public PasswordField passwordField;

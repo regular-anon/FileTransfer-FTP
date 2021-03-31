@@ -1,5 +1,5 @@
 =======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
-Time: Wed Mar 10 19:52:09 EET 2021220 Welcome to FTP server
+Time: Sat Mar 13 16:43:27 EET 2021220 Welcome to FTP server
 USER admin
 331 Please specify the password.
 PASS admin
@@ -11,123 +11,58 @@ CWD /
 SYST
 215 UNIX Type: L8
 PASV
-227 Entering Passive Mode (192,168,100,254,226,10).
+227 Entering Passive Mode (192,168,100,254,199,118).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
 CWD //folder1
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,225,220).
+227 Entering Passive Mode (192,168,100,254,200,134).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
 CWD //folder1/FileTransferTest
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,217,14).
-LIST
-150 Here comes the directory listing.
-226 Directory send OK.
-QUIT
-221 Goodbye.
-=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
-Time: Wed Mar 10 19:53:24 EET 2021220 Welcome to FTP server
-USER admin
-331 Please specify the password.
-PASS admin
-230 Login successful.
-TYPE I
-200 Switching to Binary mode.
-CWD /
-250 Directory successfully changed.
-SYST
-215 UNIX Type: L8
-PASV
-227 Entering Passive Mode (192,168,100,254,197,128).
-LIST
-150 Here comes the directory listing.
-226 Directory send OK.
-CWD //folder1
-250 Directory successfully changed.
-PASV
-227 Entering Passive Mode (192,168,100,254,222,241).
-LIST
-150 Here comes the directory listing.
-226 Directory send OK.
-CWD //folder1/FileTransferTest
-250 Directory successfully changed.
-PASV
-227 Entering Passive Mode (192,168,100,254,234,95).
+227 Entering Passive Mode (192,168,100,254,204,95).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
 CWD //folder1/FileTransferTest/TestFile1
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,230,60).
+227 Entering Passive Mode (192,168,100,254,200,202).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
 CWD //folder1/FileTransferTest/TestFile1/TestFile2
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,232,143).
+227 Entering Passive Mode (192,168,100,254,223,169).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
-ALLO 150142
-202 ALLO command ignored.
-ALLO 211142
+ALLO 1503
 202 ALLO command ignored.
 CWD //folder1/FileTransferTest/TestFile1/TestFile2
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,211,187).
+227 Entering Passive Mode (192,168,100,254,198,218).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
 CWD //folder1/FileTransferTest/TestFile1/TestFile2
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,213,21).
-LIST
-150 Here comes the directory listing.
-226 Directory send OK.
-CWD //folder1/FileTransferTest/TestFile1/TestFile2
-250 Directory successfully changed.
-PASV
-227 Entering Passive Mode (192,168,100,254,229,218).
-LIST
-150 Here comes the directory listing.
-226 Directory send OK.
-CWD //folder1/FileTransferTest/TestFile1/TestFile2
-250 Directory successfully changed.
-PASV
-227 Entering Passive Mode (192,168,100,254,218,153).
-LIST
-150 Here comes the directory listing.
-226 Directory send OK.
-ALLO 788
-202 ALLO command ignored.
-CWD //folder1/FileTransferTest/TestFile1/TestFile2
-250 Directory successfully changed.
-PASV
-227 Entering Passive Mode (192,168,100,254,213,128).
-LIST
-150 Here comes the directory listing.
-226 Directory send OK.
-CWD //folder1/FileTransferTest/TestFile1/TestFile2
-250 Directory successfully changed.
-PASV
-227 Entering Passive Mode (192,168,100,254,234,75).
+227 Entering Passive Mode (192,168,100,254,222,90).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
 QUIT
 221 Goodbye.
 =======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
-Time: Thu Mar 11 11:28:17 EET 2021220 Welcome to FTP server
+Time: Sat Mar 13 16:46:55 EET 2021220 Welcome to FTP server
 USER admin
 331 Please specify the password.
 PASS admin
@@ -139,69 +74,727 @@ CWD /
 SYST
 215 UNIX Type: L8
 PASV
-227 Entering Passive Mode (192,168,100,254,224,7).
+227 Entering Passive Mode (192,168,100,254,209,65).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
 CWD //folder1
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,208,186).
+227 Entering Passive Mode (192,168,100,254,212,254).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
 CWD //folder1/FileTransferTest
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,214,195).
+227 Entering Passive Mode (192,168,100,254,203,1).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
 CWD //folder1/FileTransferTest/TestFile1
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,197,99).
+227 Entering Passive Mode (192,168,100,254,233,101).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Sun Mar 14 00:21:10 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,213,153).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,218,12).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder2
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,207,77).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/FileTransferTest
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,210,159).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/FileTransferTest/TestFile1
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,200,175).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Sun Mar 14 00:42:08 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,203,66).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 15:19:04 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,202,230).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder2
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,230,116).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder2/$RECYCLE.BIN
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,225,106).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder2/$RECYCLE.BIN/S-1-5-18
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,219,200).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 16:18:05 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,218,5).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 16:20:54 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,222,255).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 16:21:47 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,214,92).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 16:22:30 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,196,54).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 16:23:19 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,224,250).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 16:24:26 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,199,26).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 16:27:05 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,217,170).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 16:30:01 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,212,139).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 16:31:06 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,214,216).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 16:34:39 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,208,15).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 17:55:07 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,223,65).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 18:06:18 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,210,19).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 18:06:41 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,213,108).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 18:21:59 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,217,187).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 18:22:29 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,214,32).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 18:35:24 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,203,16).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 17 20:17:31 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,200,146).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,208,128).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/FileTransferTest
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,204,36).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/FileTransferTest/TestFile1
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,197,61).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
 CWD //folder1/FileTransferTest/TestFile1/TestFile2
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,215,212).
+227 Entering Passive Mode (192,168,100,254,231,222).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
-ALLO 0
+ALLO 282
 202 ALLO command ignored.
-ALLO 601
-202 ALLO command ignored.
 CWD //folder1/FileTransferTest/TestFile1/TestFile2
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,210,44).
+227 Entering Passive Mode (192,168,100,254,198,143).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
 CWD //folder1/FileTransferTest/TestFile1/TestFile2
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,198,120).
+227 Entering Passive Mode (192,168,100,254,214,41).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
-ALLO 63148
-202 ALLO command ignored.
-CWD //folder1/FileTransferTest/TestFile1/TestFile2
+CWD //folder1/Music
+421 Timeout.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 24 16:43:45 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
 250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
 PASV
-227 Entering Passive Mode (192,168,100,254,224,137).
+227 Entering Passive Mode (192,168,100,254,208,98).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.
-CWD //folder1/FileTransferTest/TestFile1/TestFile2
+CWD //folder1
 250 Directory successfully changed.
 PASV
-227 Entering Passive Mode (192,168,100,254,198,243).
+227 Entering Passive Mode (192,168,100,254,225,192).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder2
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,214,158).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/FileTransferTest
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,224,45).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/FileTransferTest/TestFile1
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,218,244).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/Music
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,195,188).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/Music/Ambiental
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,229,134).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/Music/Amour & Blues
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,223,70).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 24 18:09:05 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,205,16).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,210,60).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/temp
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,213,123).
+LIST
+150 Here comes the directory listing.
+CWD //folder1/Music
+226 Directory send OK.
+226 Directory send OK.
+PASV
+227 Entering Passive Mode (192,168,100,254,216,186).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/FileTransferTest
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,205,147).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/System Volume Information
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,208,225).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 24 18:35:25 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,196,49).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 24 19:40:33 EET 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,205,84).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 31 12:45:13 EEST 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,213,45).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,202,235).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder2
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,215,124).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/FileTransferTest
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,196,21).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+CWD //folder1/FileTransferTest/TestFile1
+250 Directory successfully changed.
+PASV
+227 Entering Passive Mode (192,168,100,254,212,96).
+LIST
+150 Here comes the directory listing.
+226 Directory send OK.
+QUIT
+221 Goodbye.
+=======================Started connection to 192.168.100.254 port 21 with user admin and password admin=======================
+Time: Wed Mar 31 12:49:00 EEST 2021220 Welcome to FTP server
+USER admin
+331 Please specify the password.
+PASS admin
+230 Login successful.
+TYPE I
+200 Switching to Binary mode.
+CWD /
+250 Directory successfully changed.
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (192,168,100,254,210,159).
 LIST
 150 Here comes the directory listing.
 226 Directory send OK.

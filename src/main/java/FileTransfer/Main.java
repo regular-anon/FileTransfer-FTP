@@ -33,9 +33,11 @@ public class Main extends Application{
         mainStage = openStageByFileName("FileTransfer.fxml", "FileTransfer", true);
         processesStage = openStageByFileName("FileTransferProcesses.fxml", "FileTransfer Processes", true);
         splashStage = openStageByFileName("FileTransferSplashScreen.fxml", "FileTransfer Splash Screen", false);
+        UIController.addStage(loginStage, mainStage, processesStage, splashStage);
         settingsStage = openStageByFileName("FileTransferSettings.fxml", "FileTransfer Settings", true);
+        UIController.addStage(settingsStage);
 
-        UIController.addStage(loginStage, mainStage, processesStage, splashStage, settingsStage);
+
 
         loginStage.setResizable(false);
         loginStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -96,6 +98,7 @@ public class Main extends Application{
 
     public static void exit() {
         System.out.println("Trying to exit application");
+        FileTransferSettingsController.instance.saveSettings();
         if(Client.isConnected())
         {
             System.out.println("But client is connected!!");

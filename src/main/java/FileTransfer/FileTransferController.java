@@ -30,6 +30,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+//TODO: UI Themes, Log window
+
+
 public class FileTransferController implements Initializable {
     public Label pwdLabel;
     public Button uploadButton;
@@ -371,7 +374,7 @@ public class FileTransferController implements Initializable {
             FileStructure.cd(searchField.getText());
             showDirectory(FileStructure.currentDirectory);
 
-            searchField.setText("");
+//            searchField.setText("");
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");

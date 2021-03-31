@@ -10,6 +10,12 @@
         <TransferMenuButton>Transfers</TransferMenuButton>
         <SettingsTitle>Settings</SettingsTitle>
         <SettingsLanguage>Language</SettingsLanguage>
+        <LoginTitle>Login Page</LoginTitle>
+        <LoginHost>Host:</LoginHost>
+        <LoginUsername>Username:</LoginUsername>
+        <LoginPassword>Password:</LoginPassword>
+        <LoginClearButton>Clear</LoginClearButton>
+        <LoginConnectButton>Connect</LoginConnectButton>
     </Language>
     
     <Language id="RO" fullName="Romana">
@@ -21,6 +27,12 @@
         <TransferMenuButton>Transferuri</TransferMenuButton>
         <SettingsTitle>Configurari</SettingsTitle>
         <SettingsLanguage>Limbă</SettingsLanguage>
+        <LoginTitle>Pagina de logare</LoginTitle>
+        <LoginHost>Server:</LoginHost>
+        <LoginUsername>Utilizator:</LoginUsername>
+        <LoginPassword>Parola:</LoginPassword>
+        <LoginClearButton>Sterge</LoginClearButton>
+        <LoginConnectButton>Conectare</LoginConnectButton>
     </Language>
     
     <Language id="FR" fullName="Français">
@@ -32,6 +44,12 @@
         <TransferMenuButton>Transferts</TransferMenuButton>
         <SettingsTitle>Réglages</SettingsTitle>
         <SettingsLanguage>Langue</SettingsLanguage>
+        <LoginTitle>Page de connexion</LoginTitle>
+        <LoginHost>Serveur:</LoginHost>
+        <LoginUsername>Nom d'utilisateur:</LoginUsername>
+        <LoginPassword>Mot de passe:</LoginPassword>
+        <LoginClearButton>Effacer</LoginClearButton>
+        <LoginConnectButton>Relier</LoginConnectButton>
     </Language>
     
     <Language id="DE" fullName="Deutsche">
@@ -43,5 +61,11 @@
         <TransferMenuButton>Transfers</TransferMenuButton>
         <SettingsTitle>Einstellungen</SettingsTitle>
         <SettingsLanguage>Sprache</SettingsLanguage>
+        <LoginTitle>Loginseite</LoginTitle>
+        <LoginHost>Server:</LoginHost>
+        <LoginUsername>Nutzername:</LoginUsername>
+        <LoginPassword>Passwort:</LoginPassword>
+        <LoginClearButton>Löschen</LoginClearButton>
+        <LoginConnectButton>Verbinden</LoginConnectButton>
     </Language>
 </LanguageList>
