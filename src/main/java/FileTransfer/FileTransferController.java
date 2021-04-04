@@ -18,10 +18,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -51,6 +48,7 @@ public class FileTransferController implements Initializable {
     private static boolean standby;
     private static UITask currentTask;
     public static FileTransferController instance;
+    private ContextMenu contextMenu = new ContextMenu();
 
     public static boolean onStandby()
     {
@@ -112,6 +110,13 @@ public class FileTransferController implements Initializable {
 //            });
 //            return cell ;
 //        });
+        contextMenu.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("Detected mouse exit");
+                contextMenu.hide();
+            }
+        });
         dropImage.setOpacity(0);
 //        imageViewProfile.imageProperty().unbind();
         menuPreferences.textProperty().unbind();
@@ -132,6 +137,8 @@ public class FileTransferController implements Initializable {
         list.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent click) {
+                contextMenu.hide();
+                contextMenu.getItems().clear();
                 if (click.getClickCount() == 2) {
                     System.out.println("File selected!");
                     String str;
@@ -183,6 +190,23 @@ public class FileTransferController implements Initializable {
                         alert.showAndWait();
                         return;
                     }
+                }
+                else if(click.getButton() == MouseButton.SECONDARY) {
+                    System.out.println("Right click detected on element!");
+                    MenuItem item = new MenuItem("Delete");
+                    item.setOnAction(event -> {
+                        System.out.println("Deleting file (s)...");
+                        for(int i = 0;i < list.getSelectionModel().getSelectedItems().size();++i) {
+                            HBox box = (HBox) list.getSelectionModel().getSelectedItems().get(i);
+                            try {
+                                Client.deleteFile(((Label)(box.getChildren().get(2))).getText());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    contextMenu.getItems().add(item);
+                    contextMenu.show(list, click.getScreenX() ,click.getScreenY());
                 }
             }
         });
@@ -290,15 +314,15 @@ public class FileTransferController implements Initializable {
                     //content[i] = createHBox(dir.getContents().get(i));
                     if(dir.getContents().get(i).getName().equals("..") || dir.getContents().get(i).getName().equals("."))
                         continue;
-                    ContextMenu menu = new ContextMenu();
-                    MenuItem item = new MenuItem("Delete");
-                    item.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            System.out.println("Deleting file");
-                        }
-                    });
-                    menu.getItems().addAll(item);
+//                    ContextMenu menu = new ContextMenu();
+//                    MenuItem item = new MenuItem("Delete");
+//                    item.setOnAction(new EventHandler<ActionEvent>() {
+//                        @Override
+//                        public void handle(ActionEvent event) {
+//                            System.out.println("Deleting file");
+//                        }
+//                    });
+//                    menu.getItems().addAll(item);
                     HBox hbox = createHBox(dir.getContents().get(i));
                     hbox.getChildren().get(2).setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
                         @Override
@@ -307,14 +331,14 @@ public class FileTransferController implements Initializable {
                         }
                     });
 //                    (Label)(hbox.getChildren().get(2)).;
-                    hbox.setOnMousePressed(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            if (event.isSecondaryButtonDown()) {
-                                menu.show(hbox, event.getScreenX(), event.getScreenY());
-                            }
-                        }
-                    });
+//                    hbox.setOnMousePressed(new EventHandler<MouseEvent>() {
+//                        @Override
+//                        public void handle(MouseEvent event) {
+//                            if (event.isSecondaryButtonDown()) {
+//                                menu.show(hbox, event.getScreenX(), event.getScreenY());
+//                            }
+//                        }
+//                    });
                     list.getItems().add(hbox);
 
                     /*ContextMenu contextMenu = new ContextMenu();

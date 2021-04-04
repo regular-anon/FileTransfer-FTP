@@ -23,15 +23,14 @@ FileTransfer/FileTransferController.java
  FileTransfer.FileTransferController
  FileTransfer.FileTransferController$1
  FileTransfer.FileTransferController$2
- FileTransfer.FileTransferController$2$1
- FileTransfer.FileTransferController$2$2
  FileTransfer.FileTransferController$3
+ FileTransfer.FileTransferController$3$1
+ FileTransfer.FileTransferController$3$2
  FileTransfer.FileTransferController$4
  FileTransfer.FileTransferController$5
  FileTransfer.FileTransferController$6
- FileTransfer.FileTransferController$6$1
- FileTransfer.FileTransferController$6$2
- FileTransfer.FileTransferController$6$3
+ FileTransfer.FileTransferController$7
+ FileTransfer.FileTransferController$7$1
 FileTransfer/UITask.java
  FileTransfer.UITask
 FileTransfer/FileTransferLoginController.java

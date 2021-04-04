@@ -45,7 +45,6 @@ public class Client {
         Client.user = user;
         Client.password = password;
         try {
-            System.out.println();
             pw = new PrintWriter(new FileWriter("src/main/resources/Other/FtpClientLogs.txt", true));
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,6 +106,8 @@ public class Client {
         if(fileName.length() == 0)
             return;
         ftp.deleteFile(FileStructure.currentDirectory.getPath() + "/" + fileName);
+        FileStructure.assignContents(FileStructure.currentDirectory, ftp);
+        FileTransferController.instance.showDirectory(FileStructure.currentDirectory);
     }
 
     public static void close() throws Exception {
