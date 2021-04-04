@@ -2,6 +2,7 @@ package FileTransfer;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,9 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -77,6 +80,38 @@ public class FileTransferController implements Initializable {
 
     //@Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
+
+//        list.setCellFactory(lv -> {
+//
+//            ListCell<HBox> cell = new ListCell<>();
+//
+//            ContextMenu contextMenu = new ContextMenu();
+//
+//            MenuItem deleteItem = new MenuItem();
+////            deleteItem.textProperty().bind(Bindings.format("Delete \"%s\"", cell.itemProperty()));
+//            deleteItem.setText("Delete");
+//            deleteItem.setOnAction(event -> {
+//                list.getItems().remove(cell.getItem());
+//                //Delete file
+//                try {
+//                    Client.deleteFile(cell.getItem().getChildren().get(1).toString());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            });
+//            contextMenu.getItems().addAll(deleteItem);
+//
+////            cell.textProperty().bind(cell.itemProperty());
+//
+//            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+//                if (isNowEmpty) {
+//                    cell.setContextMenu(null);
+//                } else {
+//                    cell.setContextMenu(contextMenu);
+//                }
+//            });
+//            return cell ;
+//        });
         dropImage.setOpacity(0);
 //        imageViewProfile.imageProperty().unbind();
         menuPreferences.textProperty().unbind();
@@ -93,14 +128,17 @@ public class FileTransferController implements Initializable {
                 UIController.setVisible("FileTransfer Settings");
             }
         });
+
         list.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent click) {
                 if (click.getClickCount() == 2) {
+                    System.out.println("File selected!");
                     String str;
                     Object obj = list.getSelectionModel().getSelectedItem();
                     HBox box = (HBox) obj;
                     str = ((Label) box.getChildren().get(2)).getText();
+                    System.out.println("File name: " + str);
                     if (str == null || str == "")
                         return;
                     try {
@@ -252,7 +290,59 @@ public class FileTransferController implements Initializable {
                     //content[i] = createHBox(dir.getContents().get(i));
                     if(dir.getContents().get(i).getName().equals("..") || dir.getContents().get(i).getName().equals("."))
                         continue;
-                    list.getItems().add(createHBox(dir.getContents().get(i)));
+                    ContextMenu menu = new ContextMenu();
+                    MenuItem item = new MenuItem("Delete");
+                    item.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            System.out.println("Deleting file");
+                        }
+                    });
+                    menu.getItems().addAll(item);
+                    HBox hbox = createHBox(dir.getContents().get(i));
+                    hbox.getChildren().get(2).setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+                        @Override
+                        public void handle(ContextMenuEvent event) {
+
+                        }
+                    });
+//                    (Label)(hbox.getChildren().get(2)).;
+                    hbox.setOnMousePressed(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            if (event.isSecondaryButtonDown()) {
+                                menu.show(hbox, event.getScreenX(), event.getScreenY());
+                            }
+                        }
+                    });
+                    list.getItems().add(hbox);
+
+                    /*ContextMenu contextMenu = new ContextMenu();
+        MenuItem menuItem1 = new MenuItem("Choice 1");
+        MenuItem menuItem2 = new MenuItem("Choice 2");
+        MenuItem menuItem3 = new MenuItem("Choice 3");
+
+        menuItem3.setOnAction((event) -> {
+            System.out.println("Choice 3 clicked!");
+        });
+
+        contextMenu.getItems().addAll(menuItem1,menuItem2,menuItem3);
+
+        TextArea textArea = new TextArea();
+
+        textArea.setContextMenu(contextMenu);
+
+        VBox vBox = new VBox(textArea);
+        Scene scene = new Scene(vBox);
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("JavaFX App");
+
+        primaryStage.show();*/
+
+
+
+
                 }
                 pwdLabel.setText("Current Path: " + FileStructure.currentDirectory.getPath());
             }

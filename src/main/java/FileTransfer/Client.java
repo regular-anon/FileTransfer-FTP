@@ -103,6 +103,12 @@ public class Client {
         }
     }
 
+    public static void deleteFile(String fileName) throws IOException {
+        if(fileName.length() == 0)
+            return;
+        ftp.deleteFile(FileStructure.currentDirectory.getPath() + "/" + fileName);
+    }
+
     public static void close() throws Exception {
         System.out.println("Closing FTP Client...");
         try {
