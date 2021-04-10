@@ -17,7 +17,7 @@ public class Client {
     static private FTPClient ftp;
     static private PrintWriter pw;
     static private boolean connected = false;
-    static private String downloadsPath = "C:/Users/Cristian/Desktop";
+    static private String downloadsPath = System.getProperty("user.home") + "/Downloads";
 
     public static String getDownloadsPath()
     {
@@ -45,7 +45,10 @@ public class Client {
         Client.user = user;
         Client.password = password;
         try {
-            pw = new PrintWriter(new FileWriter("src/main/resources/Other/FtpClientLogs.txt", true));
+            File f = new File("src/main/resources/Other/Logs/" + user + "@" + server + ".txt");
+            if(!f.exists())
+                f.createNewFile();
+            pw = new PrintWriter(new FileWriter(f, true));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,9 +68,13 @@ public class Client {
             }
             ftp.setControlKeepAliveTimeout(5);
             connected = true;
+            login();
+            FileStructure.init();
+            FileTransferController.instance.showDirectory(FileStructure.rootDirectory);
+            FileTransferManager.init();
     }
 
-    public static void login() throws IOException {
+    private static void login() throws IOException {
         ftp.login(user, password);
         if (ftp.getReplyCode() == 500)
             throw new IOException("Invalid credentials!");
@@ -114,9 +121,17 @@ public class Client {
         System.out.println("Closing FTP Client...");
         try {
             ftp.logout();
+            System.out.println("Logged out...");
             ftp.disconnect();
+            System.out.println("Disconnected...");
+            FileTransferManager.instance.stopClient();
+            System.out.println("Stopped transfer client!");
+            FileStructure.currentDirectory = FileStructure.rootDirectory;
+            FileStructure.deleteStructure(FileStructure.rootDirectory);
         } catch (IOException e) {
             throw new Exception("Error in closing client");
+        } catch (NullPointerException e) {
+            System.out.println("It was null!");
         } finally {
             ftp = null;
             connected = false;
@@ -248,6 +263,7 @@ class FileTransferManager implements Runnable
     }
 
     private FileTransferManager() {
+        ftp = new FTPClient();
         processes = new ArrayList<>();
     }
 
@@ -269,12 +285,19 @@ class FileTransferManager implements Runnable
 
     public void stopClient() throws Exception {
         try {
-            ftp.logout();
-            ftp.disconnect();
+            if(ftp.isConnected()) {
+                ftp.logout();
+                ftp.disconnect();
+            }
         } catch (IOException e) {
+            e.printStackTrace();
             throw new Exception("Error in closing client");
-        } finally {
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        finally {
             ftp = null;
+            isRunning = false;
         }
     }
 

@@ -510,4 +510,18 @@ public class FileTransferController implements Initializable {
     public void languageButtonClicked(MouseEvent mouseEvent) {
         System.out.println("Language button clicked from label");
     }
+
+    public void disconnect(ActionEvent actionEvent) {
+        //Close window
+        UIController.hideStage("FileTransfer");
+        //Disconnect client
+        try {
+            Client.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Show the connect window
+        UIController.setVisible("FileTransfer Login");
+    }
 }

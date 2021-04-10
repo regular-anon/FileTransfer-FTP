@@ -30,7 +30,12 @@ public final class UIController
 
             @Override
             public void run() {
-                stageMap.get(s).hide();
+                try {
+                    stageMap.get(s).hide();
+                }
+                catch(Exception e) {
+//                    e.printStackTrace();
+                }
             }
         });
     }
@@ -67,7 +72,7 @@ public final class UIController
 //            removeStage(stageList.get(i));
 //        }
 //    }
-    public static void closeAllStages()
+    public static void hideAllStages()
     {
         for(String s : stageMap.keySet())
         {

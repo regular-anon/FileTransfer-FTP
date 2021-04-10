@@ -63,42 +63,12 @@ public class FileTransferLoginController  implements Initializable {
 
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
-                    alert.setHeaderText("Could not connect to server!");
+                    alert.setHeaderText(e.getMessage());
                     alert.setContentText(e.getMessage());
                     alert.showAndWait();
 
                     return;
                 }
-                System.out.println("Controller: Connected to client");
-                try {
-                    Client.login();
-                } catch (IOException e) {
-                    e.printStackTrace();
-
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Dialog");
-                    alert.setHeaderText("Credentials are probably not valid!");
-                    alert.setContentText(e.getMessage());
-                    alert.showAndWait();
-
-                    return;
-                }
-                System.out.println("Controller: Logged in");
-                try {
-                    FileStructure.init2();
-                    FileTransferController.instance.showDirectory(FileStructure.rootDirectory);
-
-                    FileTransferManager.init();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Dialog");
-                    alert.setHeaderText("Could not init the file structure.");
-                    alert.setContentText(e.getMessage());
-                    alert.showAndWait();
-                    return;
-                }
-                System.out.println("Controller: Initiated FileStructure");
             }
 
             public void execFinal() throws Exception {

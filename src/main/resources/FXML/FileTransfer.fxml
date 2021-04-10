@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -33,7 +32,7 @@
           </Menu>
             <Menu id="TransferMenuButton" mnemonicParsing="false" text="Transfers">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#showProcesses" text="Unspecified Action" />
+                  <MenuItem mnemonicParsing="false" onAction="#showProcesses" text="View Previous Transfers" />
                </items></Menu>
         </menus>
       </MenuBar>
@@ -69,6 +68,11 @@
          <top>
             <HBox alignment="CENTER" prefHeight="35.0" prefWidth="908.0" BorderPane.alignment="CENTER">
                <children>
+                  <Button mnemonicParsing="false" onAction="#disconnect" text="Disconnect">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button mnemonicParsing="false" text="Refresh" />
                   <Label prefHeight="17.0" prefWidth="15.0" />
                   <Label fx:id="pwdLabel" prefHeight="17.0" prefWidth="315.0" text="Current Path: /" />
@@ -100,11 +104,7 @@
             </VBox>
          </center>
          <bottom>
-            <AnchorPane prefHeight="33.0" prefWidth="946.0">
-               <children>
-                  <ProgressBar layoutX="671.0" layoutY="5.0" prefWidth="200.0" progress="0.0" />
-               </children>
-            </AnchorPane>
+            <AnchorPane prefHeight="33.0" prefWidth="946.0" />
          </bottom>
       </BorderPane>
    </children>

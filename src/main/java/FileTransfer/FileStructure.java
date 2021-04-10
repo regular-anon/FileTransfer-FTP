@@ -11,10 +11,22 @@ public class FileStructure
     static DirectoryInstance rootDirectory = new DirectoryInstance("");
     static DirectoryInstance currentDirectory = rootDirectory;
 
-    public static void init2() throws IOException {
+    public static void init() throws IOException {
         rootDirectory.parentDirectory = rootDirectory;
         assignContents(rootDirectory, Client.getFTPClient());
     }
+
+    public static void deleteStructure(FileStructureInstance fsi) {
+        //Delete a tree structure - automatic garbage collection ?
+        if(fsi instanceof DirectoryInstance) {
+            DirectoryInstance dir = (DirectoryInstance) fsi;
+            for(int i = 0;i < dir.getContents().size();++i) {
+                deleteStructure(dir.getContents().get(i));
+            }
+            dir.getContents().clear();
+        }
+    }
+
 
     static void cd (String rp) throws Exception {
         currentDirectory = (DirectoryInstance)search(rp);

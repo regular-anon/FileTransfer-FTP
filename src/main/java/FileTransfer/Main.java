@@ -18,17 +18,21 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class Main extends Application{
+public class Main extends Application {
 
     public static Stage mainStage, loginStage, processesStage, splashStage, settingsStage;
+    private static boolean hasIconTray = false;
 
-    public Main() throws IOException
-    {
+    public Main() throws IOException {
+        Platform.setImplicitExit(false);
         loginStage = openStageByFileName("FileTransferLogin.fxml", "FileTransfer Login", true);
         mainStage = openStageByFileName("FileTransfer.fxml", "FileTransfer", true);
         processesStage = openStageByFileName("FileTransferProcesses.fxml", "FileTransfer Processes", true);
@@ -36,7 +40,6 @@ public class Main extends Application{
         UIController.addStage(loginStage, mainStage, processesStage, splashStage);
         settingsStage = openStageByFileName("FileTransferSettings.fxml", "FileTransfer Settings", true);
         UIController.addStage(settingsStage);
-
 
 
         loginStage.setResizable(false);
@@ -48,36 +51,106 @@ public class Main extends Application{
         });
         mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
-                System.out.println("Main Stage is closing");
-                Main.exit();
+                we.consume();
+                if(hasIconTray)
+                    UIController.hideAllStages();
+                else
+                    exit();
             }
         });
 
         splashStage.getIcons().add(new Image("Photos/cloud.png"));
         UIController.setVisible("FileTransfer Splash Screen");
-            new java.util.Timer().schedule(
-                    new java.util.TimerTask() {
-                        @Override
-                        public void run() {
-                            Platform.runLater(new Runnable(){
-                                @Override
-                                public void run() {
-                                    UIController.hideStage("FileTransfer Splash Screen");
-                                    try
-                                    {
-                                        Thread.sleep(200);
-                                    }
-                                    catch(InterruptedException e)
-                                    {
-                                        System.out.println(e.getStackTrace());
-                                    }
-                                    UIController.setVisible("FileTransfer Login");
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                UIController.hideStage("FileTransfer Splash Screen");
+                                try {
+                                    Thread.sleep(200);
+                                } catch (InterruptedException e) {
+                                    System.out.println(e.getStackTrace());
                                 }
-                            });
-                        }
-                    },
-                    2500
-            );
+                                UIController.setVisible("FileTransfer Login");
+                            }
+                        });
+                    }
+                },
+                2500
+        );
+
+//        java.awt.TrayIcon trayIcon = null;
+//            java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+//            System.out.println("Looking for tray icon photo from " + System.getProperty("user.dir"));
+//            java.awt.Image image = java.awt.Toolkit.getDefaultToolkit().getImage("src/main/resources/Photos/cloud_white.png");
+//            java.awt.event.ActionListener listener = new java.awt.event.ActionListener() {
+//                public void actionPerformed(java.awt.event.ActionEvent e) {
+//                    System.out.println("Closed program!");
+//                    Platform.runLater(() -> {
+//                        Main.exit();
+//                    });
+//                }
+//            };
+//            java.awt.PopupMenu popup = new java.awt.PopupMenu();
+//            java.awt.MenuItem defaultItem = new java.awt.MenuItem("Close");
+//            defaultItem.addActionListener(listener);
+//            popup.add(defaultItem);
+//            trayIcon = new java.awt.TrayIcon(image, "FileTransfer", popup);
+//            trayIcon.addActionListener(e -> {
+//                if(Client.isConnected()) {
+//                    UIController.setVisible("FileTransfer");
+//                }
+//            });
+//            try {
+//                tray.add(trayIcon);
+//            } catch (java.awt.AWTException e) {
+//                System.err.println(e);
+//            }
+            java.awt.TrayIcon trayIcon = null;
+            if (java.awt.SystemTray.isSupported()) {
+                hasIconTray = true;
+                // get the SystemTray instance
+                java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+                // load an image
+                java.awt.Image image = java.awt.Toolkit.getDefaultToolkit().getImage("src/main/resources/Photos/cloud_white.gif");
+                // create a action listener to listen for default action executed on the tray icon
+                java.awt.event.ActionListener listener = new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        System.out.println("Closed program!");
+                        Platform.runLater(() -> {
+                            Main.exit();
+                        });
+                    }
+                };
+                // create a popup menu
+                java.awt.PopupMenu popup = new java.awt.PopupMenu();
+                // create menu item for the default action
+                java.awt.MenuItem defaultItem = new java.awt.MenuItem("Close");
+                defaultItem.addActionListener(listener);
+                popup.add(defaultItem);
+                /// ... add other items
+                // construct a TrayIcon
+                trayIcon = new java.awt.TrayIcon(image, "FileTransfer", popup);
+                // set the TrayIcon properties
+                trayIcon.addActionListener(e -> {
+                    if(Client.isConnected()) {
+                    UIController.setVisible("FileTransfer");
+                }
+                });
+                // ...
+                // add the tray image
+                try {
+                    tray.add(trayIcon);
+                } catch (java.awt.AWTException e) {
+                    System.err.println(e);
+                }
+                // ...
+            } else {
+                // disable tray option in your application or
+            }
     }
 
     //Opens a stage by the name of the file in src/main/resources/FXML (extension of file needed!)
@@ -85,7 +158,7 @@ public class Main extends Application{
         Parent root;
         Scene scene;
         Stage stage;
-        root = FXMLLoader.load(new java.io.File("../FileTransfer/src/main/resources/FXML/" + fileName).toURI().toURL());
+        root = FXMLLoader.load(new java.io.File("src/main/resources/FXML/" + fileName).toURI().toURL());
         scene = new Scene(root);
         stage = new Stage();
         stage.setTitle(title);
@@ -99,6 +172,7 @@ public class Main extends Application{
     public static void exit() {
         System.out.println("Trying to exit application");
         FileTransferSettingsController.instance.saveSettings();
+        FileStructure.currentDirectory = FileStructure.rootDirectory;
         if(Client.isConnected())
         {
             System.out.println("But client is connected!!");
@@ -112,9 +186,12 @@ public class Main extends Application{
                 Optional<ButtonType> result = alert.showAndWait();
                 if(result.get() == ButtonType.FINISH)
                 {
+                    System.out.println("Pressed Finish button...");
+//                    System.exit(0);
                     try {
                         Client.close();
-                        UIController.closeAllStages();
+                        UIController.hideAllStages();
+                        Platform.exit();
                         System.exit(0);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -130,7 +207,8 @@ public class Main extends Application{
                 System.out.println("Transfer manager is not running, but trying to disconnect...");
                 try {
                     Client.close();
-                    UIController.closeAllStages();
+                    UIController.hideAllStages();
+                    Platform.exit();
                     System.exit(0);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -138,7 +216,7 @@ public class Main extends Application{
                 System.out.println("Done disconnecting...");
             }
         }
-        UIController.closeAllStages();
+        UIController.hideAllStages();
         System.exit(0);
     }
 
