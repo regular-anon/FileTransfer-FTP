@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -289,6 +290,9 @@ public class FileTransferController implements Initializable {
 //        });
     }
 
+    private Image folderImage = new Image("Photos/folder.png");
+    private Image fileImage = new Image("Photos/file.png");
+
     public void showDirectory(DirectoryInstance dir)
     {
         Platform.runLater(new Runnable(){
@@ -298,7 +302,7 @@ public class FileTransferController implements Initializable {
                 list.getItems().clear();
 
                 HBox box = new HBox();
-                ImageView imgView = new ImageView(new Image("Photos/folder.png"));
+                ImageView imgView = new ImageView(folderImage);
                 Label l = new Label("..");
                 imgView.setPreserveRatio(true);
                 imgView.setFitHeight(15);
@@ -379,11 +383,11 @@ public class FileTransferController implements Initializable {
         ImageView imgView;
         if(fsi instanceof DirectoryInstance)
         {
-            imgView = new ImageView(new Image("Photos/folder.png"));
+            imgView = new ImageView(folderImage);
         }
         else
         {
-            imgView = new ImageView(new Image("Photos/file.png"));
+            imgView = new ImageView(fileImage);
         }
         imgView.setPreserveRatio(true);
         imgView.setFitHeight(15);
@@ -512,16 +516,21 @@ public class FileTransferController implements Initializable {
     }
 
     public void disconnect(ActionEvent actionEvent) {
-        //Close window
-        UIController.hideStage("FileTransfer");
-        //Disconnect client
-        try {
-            Client.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        //Close window
+//        UIController.hideStage("FileTransfer");
+//        //Disconnect client
+//        try {
+//            Client.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        //Show the connect window
+//        UIController.setVisible("FileTransfer Login");
+        Main.exit();
+    }
 
-        //Show the connect window
-        UIController.setVisible("FileTransfer Login");
+    public void viewLogs(ActionEvent actionEvent) {
+        System.out.println(Client.getLogs());
     }
 }

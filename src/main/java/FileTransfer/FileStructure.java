@@ -32,7 +32,7 @@ public class FileStructure
         currentDirectory = (DirectoryInstance)search(rp);
     }
 
-    static FileStructureInstance search(String rp) throws Exception {
+    static FileStructureInstance search(String rp) throws IOException {
         DirectoryInstance current = currentDirectory;
         if(rp.charAt(0) == '/')
         {
@@ -55,7 +55,7 @@ public class FileStructure
             if(next instanceof FileInstance)
                 return next;
             if(next == null)
-                throw new Exception("File not found with path: " + rp);
+                throw new IOException("File not found with path: " + rp);
             if(!((DirectoryInstance)next).hasContent)
                 assignContents((DirectoryInstance)(next), Client.getFTPClient());
             current = (DirectoryInstance)(next);

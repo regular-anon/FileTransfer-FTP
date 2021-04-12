@@ -62,7 +62,6 @@ public class FileTransferSettingsController  implements Initializable
     }
 
     public void parsePropFile() {
-        System.out.println("Parsing properties file...");
         Scanner sc = null;
         try {
             File f = new File("src/main/resources/Other/user_settings.txt");
@@ -114,12 +113,10 @@ public class FileTransferSettingsController  implements Initializable
     }
 
     private void changeDisplayLanguage(Language lang) {
-        System.out.println("Changing display language to " + lang.getName());
         if(labelMap == null) {
             labelMap = new HashMap<>();
             ArrayList<Stage> stageList = new ArrayList<Stage>(UIController.getStages().values());
             ArrayList<String> idList = new ArrayList<String>(lang.getMap().keySet());//(ArrayList<String>)lang.getMap().keySet();
-            System.out.println("Stage list: " + stageList.size());
             for(int i = 0;i < stageList.size();++i) {
                 Scene s = stageList.get(i).getScene();
                 for(int j = 0;j < idList.size();++j) {
@@ -133,7 +130,6 @@ public class FileTransferSettingsController  implements Initializable
         }
         for(String key : labelMap.keySet()) {
 //            labelMap.get(key).textProperty().unbind(); // < ---------
-            System.out.println("Changing from " + labelMap.get(key).getText() + " to " + lang.getWord(key));
             labelMap.get(key).setText(lang.getWord(key));
         }
         languageSelectButton.setText(lang.getName());
@@ -145,13 +141,10 @@ public class FileTransferSettingsController  implements Initializable
     {
         try {
             File file = new File(fileName);
-            System.out.println("Looking for languages file in " + System.getProperty("user.dir"));
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(file);
             doc.getDocumentElement().normalize();
-            System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
-
             NodeList nodeList = doc.getElementsByTagName("Language");
             languageList = nodeList;
 

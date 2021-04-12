@@ -28,6 +28,7 @@
           <Menu id="Preferences" mnemonicParsing="false" text="Preferences">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#modifyDownloadsDirectory" text="Modify Download Directory" />
+                  <MenuItem mnemonicParsing="false" onAction="#viewLogs" text="View Logs" />
             </items>
           </Menu>
             <Menu id="TransferMenuButton" mnemonicParsing="false" text="Transfers">
