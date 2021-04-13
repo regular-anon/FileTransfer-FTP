@@ -17,11 +17,14 @@ FileTransfer/FileStructure.java
  FileTransfer.FileInstance
  FileTransfer.FileStructure
  FileTransfer.FileStructureInstance
-FileTransfer/Client.java
- FileTransfer.Client
- FileTransfer.Client$1
- FileTransfer.FileTransferManager
- FileTransfer.FileTransferProcess
+FileTransfer/Main.java
+ FileTransfer.DeveloperConsole
+ FileTransfer.Main
+ FileTransfer.Main$1
+ FileTransfer.Main$2
+ FileTransfer.Main$3
+ FileTransfer.Main$3$1
+ FileTransfer.Main$4
 FileTransfer/FileTransferController.java
  FileTransfer.FileTransferController
  FileTransfer.FileTransferController$1
@@ -37,11 +40,13 @@ FileTransfer/FileTransferController.java
 FileTransfer/FileTransferLoginController.java
  FileTransfer.FileTransferLoginController
  FileTransfer.FileTransferLoginController$1
-FileTransfer/Main.java
- FileTransfer.DeveloperConsole
- FileTransfer.Main
- FileTransfer.Main$1
- FileTransfer.Main$2
- FileTransfer.Main$3
- FileTransfer.Main$3$1
- FileTransfer.Main$4
+FileTransfer/Client.java
+ FileTransfer.Client
+ FileTransfer.Client$1
+ FileTransfer.Client$2
+ FileTransfer.FileTransferManager
+ FileTransfer.FileTransferProcess
+FileTransfer/FileTransferLogsController.java
+ FileTransfer.FileTransferLogsController
+ FileTransfer.FileTransferLogsController$1
+ FileTransfer.FileTransferLogsController$2

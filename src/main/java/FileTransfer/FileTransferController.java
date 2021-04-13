@@ -532,5 +532,6 @@ public class FileTransferController implements Initializable {
 
     public void viewLogs(ActionEvent actionEvent) {
         System.out.println(Client.getLogs());
+        UIController.setVisible("FileTransfer Logs");
     }
 }

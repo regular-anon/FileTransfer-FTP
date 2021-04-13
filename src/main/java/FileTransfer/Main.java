@@ -28,7 +28,7 @@ import java.util.TimerTask;
 
 public class Main extends Application {
 
-    public static Stage mainStage, loginStage, processesStage, splashStage, settingsStage;
+    public static Stage mainStage, loginStage, processesStage, splashStage, settingsStage, logsStage;
     private static boolean hasIconTray = false;
 
     public Main() throws IOException {
@@ -37,7 +37,8 @@ public class Main extends Application {
         mainStage = openStageByFileName("FileTransfer.fxml", "FileTransfer", true);
         processesStage = openStageByFileName("FileTransferProcesses.fxml", "FileTransfer Processes", true);
         splashStage = openStageByFileName("FileTransferSplashScreen.fxml", "FileTransfer Splash Screen", false);
-        UIController.addStage(loginStage, mainStage, processesStage, splashStage);
+        logsStage = openStageByFileName("FileTransferLogs.fxml", "FileTransfer Logs", true);
+        UIController.addStage(loginStage, mainStage, processesStage, splashStage, logsStage);
         settingsStage = openStageByFileName("FileTransferSettings.fxml", "FileTransfer Settings", true);
         UIController.addStage(settingsStage);
 

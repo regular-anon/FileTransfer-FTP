@@ -1,6 +1,8 @@
 package FileTransfer;
 
 import org.apache.commons.net.PrintCommandListener;
+import org.apache.commons.net.ProtocolCommandEvent;
+import org.apache.commons.net.ProtocolCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
@@ -66,12 +68,32 @@ public class Client {
                 @Override
                 public void write(int b) throws IOException {
                     pw.write(b);
-                    logs += (char)b;
+                    pw.flush();
+
+                    FileTransferLogsController.addTextToLogs((char)b);
                 }
             };
             pw.write("=======================Started connection to " + server + " port " + port + " with user " + user + " and password " + password + "=======================\n");
             pw.write("Time: " + new java.util.Date(System.currentTimeMillis()).toString());
-            ftp.addProtocolCommandListener(new PrintCommandListener(new PrintStream(os)));
+            ftp.addProtocolCommandListener(new ProtocolCommandListener() {
+                @Override
+                public void protocolCommandSent(ProtocolCommandEvent protocolCommandEvent) {
+                    try {
+                        os.write(protocolCommandEvent.getMessage().getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void protocolReplyReceived(ProtocolCommandEvent protocolCommandEvent) {
+                    try {
+                        os.write(protocolCommandEvent.getMessage().getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
             ftp.connect(server, port);
             int reply = ftp.getReplyCode();
@@ -131,18 +153,13 @@ public class Client {
     }
 
     public static void close() throws Exception {
-        System.out.println("Closing FTP Client... (close())");
         try {
             if(FileTransferManager.instance.isRunning()) {
                 //Cancel transfers
                 FileTransferManager.instance.stopClient();
-                System.out.println("Managed to stop client! (close())");
             }
             ftp.logout();
-            System.out.println("Logged out... (close())");
             ftp.disconnect();
-            System.out.println("Disconnected... (close())");
-            System.out.println("Stopped transfer client! (close())");
             FileStructure.currentDirectory = FileStructure.rootDirectory;
             FileStructure.deleteStructure(FileStructure.rootDirectory);
         } catch (IOException e) {
@@ -154,7 +171,6 @@ public class Client {
             ftp = null;
             connected = false;
         }
-        System.out.println("Done closing! (close()) <---------");
     }
     public static FTPClient getFTPClient()
     {
@@ -323,19 +339,20 @@ class FileTransferManager implements Runnable
     }
 
     public void startClient() throws IOException {
-        ftp = new FTPClient();
-        ftp.connect(Client.getServer(), Client.getPort());
-        int reply = ftp.getReplyCode();
-        if (!FTPReply.isPositiveCompletion(reply)) {
-            ftp.disconnect();
-            throw new IOException("Exception in connecting to FTP Server");
-        }
-
-        ftp.login(Client.getCredentials()[0], Client.getCredentials()[1]);
-        if (ftp.getReplyCode() == 500)
-            throw new IOException("Invalid credentials!");
-        ftp.setFileType(FTP.BINARY_FILE_TYPE);
-        ftp.enterLocalPassiveMode();
+//        ftp = new FTPClient();
+//        ftp.connect(Client.getServer(), Client.getPort());
+//        int reply = ftp.getReplyCode();
+//        if (!FTPReply.isPositiveCompletion(reply)) {
+//            ftp.disconnect();
+//            throw new IOException("Exception in connecting to FTP Server");
+//        }
+//
+//        ftp.login(Client.getCredentials()[0], Client.getCredentials()[1]);
+//        if (ftp.getReplyCode() == 500)
+//            throw new IOException("Invalid credentials!");
+//        ftp.setFileType(FTP.BINARY_FILE_TYPE);
+//        ftp.enterLocalPassiveMode();
+        ftp = Client.getFTPClient();
     }
 
     public void startTransfer() {
@@ -347,16 +364,17 @@ class FileTransferManager implements Runnable
             return;
         try {
             cancelProcesses();
-            if(ftp.isConnected()) {
-                System.out.println("Trying to disconnect transfer ftp client... (line 351)");
-                ftp.logout();
-                ftp.disconnect();
-            }
+//            if(ftp.isConnected()) {
+//                System.out.println("Trying to disconnect transfer ftp client... (line 351)");
+//                ftp.logout();
+//                ftp.disconnect();
+//            }
             System.out.println("Stopped client without any errors! (stopClient())");
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new Exception("Error in closing client");
         }
+//        catch (IOException e) {
+//            e.printStackTrace();
+//            throw new Exception("Error in closing client");
+//        }
         finally {
             ftp = null;
             isRunning = false;
