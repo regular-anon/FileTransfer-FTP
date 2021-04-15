@@ -48,5 +48,3 @@ FileTransfer/Client.java
  FileTransfer.FileTransferProcess
 FileTransfer/FileTransferLogsController.java
  FileTransfer.FileTransferLogsController
- FileTransfer.FileTransferLogsController$1
- FileTransfer.FileTransferLogsController$2

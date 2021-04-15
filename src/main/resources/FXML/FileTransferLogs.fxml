@@ -36,7 +36,7 @@
             <Font name="System Italic" size="31.0" />
          </font>
       </Label>
-      <TextField fx:id="textField" layoutY="583.0" prefHeight="25.0" prefWidth="457.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="2.0" />
+      <TextField fx:id="textField" layoutY="583.0" onAction="#onTextFieldAction" prefHeight="25.0" prefWidth="457.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="2.0" />
       <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" text="Search" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="470.0" />
       <Button fx:id="clearButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clear" text="Clear" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="535.0" />
    </children>
