@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
@@ -29,6 +30,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 //TODO: UI Themes, Log window
@@ -399,13 +401,28 @@ public class FileTransferController implements Initializable {
     }
 
     public void uploadPress(ActionEvent actionEvent) {
-        FileDialog d = new FileDialog((java.awt.Frame) null);
-        d.setVisible(true);
-        File[] files;// = {new File("")};
-        files = d.getFiles();
-        for (int i = 0; i < files.length; ++i) {
+//        FileDialog d = new FileDialog((java.awt.Frame) null);
+//        d.setVisible(true);
+//        File[] files;// = {new File("")};
+//        files = d.getFiles();
+//        for (int i = 0; i < files.length; ++i) {
+//            try {
+//                Client.upload(files[i]);
+//            } catch (IOException e) {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Error Dialog");
+//                alert.setHeaderText("Could not download file");
+//                alert.setContentText(e.getMessage());
+//                alert.showAndWait();
+//                e.printStackTrace();
+//            }
+//        }
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        List<File> files = fileChooser.showOpenMultipleDialog(UIController.getStages().get("FileTransfer"));
+        for(int i = 0;i < files.size(); ++i) {
             try {
-                Client.upload(files[i]);
+                Client.upload(files.get(i));
             } catch (IOException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Dialog");

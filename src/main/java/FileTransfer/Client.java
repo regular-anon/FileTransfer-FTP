@@ -124,7 +124,7 @@ public class Client {
             fis = new FileInputStream(f);
             ftp.storeFile("folder1/FileTransfertest", fis);
             System.out.println("Stored file.");
-
+            
             System.out.println("Updating directory...");
             DirectoryInstance dir = (DirectoryInstance)FileStructure.search("/folder1/FileTransferTest");
             FileStructure.assignContents(dir, Client.getFTPClient());
@@ -159,7 +159,9 @@ public class Client {
                 FileTransferManager.instance.stopClient();
             }
             ftp.logout();
+            System.out.println("Logged out from server");
             ftp.disconnect();
+            System.out.println("Disconnected from server");
             FileStructure.currentDirectory = FileStructure.rootDirectory;
             FileStructure.deleteStructure(FileStructure.rootDirectory);
         } catch (IOException e) {
@@ -319,7 +321,7 @@ class FileTransferManager implements Runnable
     public boolean isRunning = false;
     public FTPClient ftp;
     static FileTransferManager instance;
-    private int transferBuffer = 16_384; // maximum buffer size
+    private int maxBufferSize = 16_384; // maximum buffer size
 
     public void addProcess(FileTransferProcess fp)
     {
@@ -381,12 +383,12 @@ class FileTransferManager implements Runnable
         }
     }
 
-    public void cancelProcesses()
+    private void cancelProcesses()
     {
         for(int i = 0;i < processes.size();++i) {
             processes.get(i).cancelTransfer();
         }
-        processes.clear();
+//        processes.clear();
         System.out.println("Managed to cancel processes! (cancelProcesses())");
     }
 
@@ -460,9 +462,14 @@ class FileTransferManager implements Runnable
                     processes.add(fp);
                     continue;
                 } catch (RuntimeException e) {
-                    e.printStackTrace();
                     if(e.getMessage().equals("File download cancelled!")) {
                         processes.remove(fp);
+                        System.out.println("Upload cancelled!");
+                        try {
+                            ftp.abort();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
                         continue;
                     }
                 }
@@ -480,38 +487,58 @@ class FileTransferManager implements Runnable
     }
     private void upload(FileTransferProcess fp) throws IOException {
         FileInputStream fis = null;
+        System.out.println("File name: " + fp.getFile().getName());
         try {
             fis = new FileInputStream(fp.getFile());
-            ftp.changeWorkingDirectory(fp.getRemotePath().substring(0, fp.getRemotePath().lastIndexOf('/')));
-            ftp.storeFile(fp.getRemotePath().substring(fp.getRemotePath().lastIndexOf('/') + 1), fis);
+            BufferedOutputStream outputStream = new BufferedOutputStream(ftp.storeFileStream(fp.getRemotePath()));
+            long uploadedSize = 0L;
+            long fileSize = fp.getFile().length();
+            while (uploadedSize < fileSize && !fp.isCancelled()) {
+                byte[] buffer;
+                if(fileSize - uploadedSize < maxBufferSize)
+                    buffer = new byte[(int)(fileSize - uploadedSize)];
+                else
+                    buffer = new byte[maxBufferSize];
+                fis.read(buffer, 0, buffer.length);
+                outputStream.write(buffer);
+                uploadedSize += buffer.length;
+                System.out.println("Uploaded bytes: " + uploadedSize);
+                fp.updateProgress(uploadedSize / fileSize);
+            }
+            if (outputStream != null)
+                outputStream.close();
+            if (!ftp.completePendingCommand())
+                throw new IOException("IOException in file upload!");
+            if (uploadedSize < fileSize)
+                throw new RuntimeException("File upload cancelled!");
+            System.out.println("Closed outputStream...");
+
             System.out.println("Stored file.");
 
             System.out.println("Updating directory...");
-            DirectoryInstance dir = (DirectoryInstance)FileStructure.search(fp.getRemotePath().substring(0, fp.getRemotePath().lastIndexOf('/')));
+            DirectoryInstance dir = (DirectoryInstance) FileStructure.search(fp.getRemotePath().substring(0, fp.getRemotePath().lastIndexOf('/')));
             FileStructure.assignContents(dir, Client.getFTPClient());
 
-            if(FileStructure.currentDirectory.getPath().equals(dir.getPath()))
-            {
+            if (FileStructure.currentDirectory.getPath().equals(dir.getPath())) {
                 FileTransferController.instance.showDirectory(dir);
             }
-
-            System.out.println("Everything went smoothly :/");
         }
         finally {
-            fis.close();
+            if(fis != null)
+                fis.close();
         }
     }
     //When using retrieveFileStream() method, close the input stream and then call completePendingCommand()
-    private void download(FileTransferProcess fp) throws IOException, RuntimeException {
+    private void download(FileTransferProcess fp) throws IOException {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(fp.getFile());
             BufferedInputStream inputStream = new BufferedInputStream(ftp.retrieveFileStream(fp.getRemotePath()));
             int tempByte = inputStream.read();
-            float downloadedSize = 0f;
+            long downloadedSize = 0;
             while(tempByte != -1 && !fp.isCancelled()) {
                 int available = inputStream.available();
-                byte[] buffer = new byte[Math.min(transferBuffer, available) + 1];
+                byte[] buffer = new byte[Math.min(maxBufferSize, available) + 1];
                 buffer[0] = (byte)tempByte;
                 inputStream.read(buffer, 1, buffer.length - 1);
                 tempByte = inputStream.read();
@@ -523,9 +550,9 @@ class FileTransferManager implements Runnable
                 inputStream.close();
             if(!ftp.completePendingCommand())
                 throw new IOException ("IOException in file download!");
-            if(downloadedSize < fp.getFile().length()) {
+            if(downloadedSize < fp.getFile().length())
                 throw new RuntimeException("File download cancelled!");
-            }
+
         }
         finally {
             if(fos != null)

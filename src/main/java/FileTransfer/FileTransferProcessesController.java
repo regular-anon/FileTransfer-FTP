@@ -1,15 +1,11 @@
 package FileTransfer;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -34,7 +30,7 @@ public class FileTransferProcessesController implements Initializable
 //        processesStage.show();
     }
 
-    public int addProcess(String fileName, long size)
+    public int addProcess(String fileName, float size)
     {
         HBox box = new HBox();
         Label idLabel = new Label("" + id + ") ");
@@ -46,7 +42,7 @@ public class FileTransferProcessesController implements Initializable
             i++;
             size /= 1024;
         }
-        sizeStr = size + " " + s[i];
+        sizeStr = String.format("%.2f %s", size, s[i]);//size + " " + s[i];
 
         Label fileSizeLabel = new Label(" - " + sizeStr);
 
