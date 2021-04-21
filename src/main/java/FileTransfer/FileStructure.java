@@ -32,7 +32,11 @@ public class FileStructure
         currentDirectory = (DirectoryInstance)search(rp);
     }
 
-    static FileStructureInstance search(String rp) throws Exception {
+    static void cd(DirectoryInstance dir) throws Exception {
+        currentDirectory = dir;
+    }
+
+    static FileStructureInstance search(String rp) throws IOException {
         DirectoryInstance current = currentDirectory;
         if(rp.charAt(0) == '/')
         {
@@ -55,7 +59,7 @@ public class FileStructure
             if(next instanceof FileInstance)
                 return next;
             if(next == null)
-                throw new Exception("File not found with path: " + rp);
+                throw new IOException("File not found with path: " + rp);
             if(!((DirectoryInstance)next).hasContent)
                 assignContents((DirectoryInstance)(next), Client.getFTPClient());
             current = (DirectoryInstance)(next);
@@ -89,49 +93,31 @@ public class FileStructure
             if(f.isDirectory())
             {
                 DirectoryInstance d = new DirectoryInstance(dir.getPath() + "/" + f.getName());
+                d.setSize(f.getSize());
+                d.setLastModified(f.getTimestamp().getTimeInMillis());
                 dir.addItem(d);
             }
             else
             {
-                FileInstance file = new FileInstance(dir.getPath() + "/" + f.getName(), f.getSize());
+                FileInstance file = new FileInstance(dir.getPath() + "/" + f.getName());
+                file.setSize(f.getSize());
+                file.setLastModified(f.getTimestamp().getTimeInMillis());
                 dir.addItem(file);
             }
         }
         dir.hasContent = true;
         System.out.println("------------");
     }
-    private static void initStructure(DirectoryInstance dir, FTPClient ftp) throws IOException {
-        ftp.changeWorkingDirectory("/" + dir.getPath());
-        FTPFile[] files = ftp.listFiles();
-        DirectoryInstance[] dirs = new DirectoryInstance[ftp.listDirectories().length];
-        int index = 0;
-        for (FTPFile f : files) {
-            if (f.isDirectory()) {
-                DirectoryInstance d = new DirectoryInstance(dir.getPath() + "/" + f.getName());
-                dirs[index++] = d;
-                dir.addItem(d);
-            } else {
-                FileInstance file = new FileInstance(dir.getPath() + "/" + f.getName(), f.getSize());
-                dir.addItem(file);
-            }
+
+    public static String longToSizeString(float size) {
+        String[] s = {"B", "KB", "MB", "GB"};
+        int i = 0;
+        while(size >= 1024 && i < s.length){
+            i++;
+            size /= 1024;
         }
-        for (DirectoryInstance directory : dirs) {
-            initStructure(directory, ftp);
-        }
+        return String.format("%.2f %s", size, s[i]);
     }
-
-//    static class FileDiscoverer implements Runnable
-//    {
-//        public void run()
-//        {
-//            try {
-//                FileStructure.initStructure(FileStructure.rootDirectory, Client.getFTPClient());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
 }
 
 class FileStructureInstance
@@ -139,6 +125,7 @@ class FileStructureInstance
     String remotePath;
     String name;
     DirectoryInstance parentDirectory;
+    long size, lastModified;
     public FileStructureInstance(String rp)
     {
         remotePath = rp;
@@ -157,19 +144,22 @@ class FileStructureInstance
     {
         remotePath = rp;
     }
+    public void setSize(long size) {
+        this.size = size;
+    }
+    public void setLastModified(long lastModified) {
+        this.lastModified = lastModified;
+    }
+    public long getSize()
+    {
+        return size;
+    }
 }
 
 class FileInstance extends FileStructureInstance
 {
-    private long size;
-    public FileInstance(String rp, long size) {
+    public FileInstance(String rp) {
         super(rp);
-        this.size = size;
-    }
-
-    public long getSize()
-    {
-        return size;
     }
 }
 class DirectoryInstance extends FileStructureInstance

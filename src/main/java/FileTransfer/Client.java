@@ -117,6 +117,14 @@ public class Client {
         FileTransferController.instance.showDirectory(FileStructure.currentDirectory);
     }
 
+    public static void deleteFile(FileInstance fi) throws IOException {
+        if(fi.getName().length() == 0)
+            return;
+        ftp.deleteFile(fi.getPath());
+        FileStructure.assignContents(FileStructure.currentDirectory, Client.getFTPClient());
+        FileTransferController.instance.showDirectory(FileStructure.currentDirectory);
+    }
+
     public static void close() throws Exception {
         System.out.println("Closing FTP Client...");
         try {

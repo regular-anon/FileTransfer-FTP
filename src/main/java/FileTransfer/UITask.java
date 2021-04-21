@@ -29,7 +29,9 @@ public class UITask implements Runnable
             {
                 e.printStackTrace();
             }
-            FileTransferController.exitStandbyMode();
+            finally {
+                FileTransferController.exitStandbyMode();
+            }
         }
         else
             System.out.println("Cancelled task");

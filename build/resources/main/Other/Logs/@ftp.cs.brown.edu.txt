@@ -1,0 +1,178 @@
+=======================Started connection to ftp.cs.brown.edu port 21 with user  and password =======================
+Time: Sat Apr 10 18:17:16 EEST 2021220---------- Welcome to Pure-FTPd [privsep] [TLS] ----------
+220-You are user number 3 of 50 allowed.
+220-Local time is now 11:17. Server port: 21.
+220-IPv6 connections are also welcome on this server.
+220 You will be disconnected after 15 minutes of inactivity.
+USER 
+230 Anonymous user logged in
+TYPE I
+200 TYPE is now 8-bit binary
+CWD /
+250 OK. Current directory is /
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (128,148,32,111,195,186)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 3 matches total
+CWD //pub
+250 OK. Current directory is /pub
+PASV
+227 Entering Passive Mode (128,148,32,111,195,140)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 81 matches total
+CWD //incoming
+250 OK. Current directory is /incoming
+PASV
+227 Entering Passive Mode (128,148,32,111,195,208)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 9049 matches total
+=======================Started connection to ftp.cs.brown.edu port 21 with user  and password =======================
+Time: Sat Apr 10 18:27:20 EEST 2021220---------- Welcome to Pure-FTPd [privsep] [TLS] ----------
+220-You are user number 6 of 50 allowed.
+220-Local time is now 11:27. Server port: 21.
+220-IPv6 connections are also welcome on this server.
+220 You will be disconnected after 15 minutes of inactivity.
+USER 
+230 Anonymous user logged in
+TYPE I
+200 TYPE is now 8-bit binary
+CWD /
+250 OK. Current directory is /
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (128,148,32,111,195,86)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 3 matches total
+CWD //incoming
+250 OK. Current directory is /incoming
+PASV
+227 Entering Passive Mode (128,148,32,111,197,11)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 9049 matches total
+=======================Started connection to ftp.cs.brown.edu port 21 with user  and password =======================
+Time: Sat Apr 10 18:58:30 EEST 2021220---------- Welcome to Pure-FTPd [privsep] [TLS] ----------
+220-You are user number 2 of 50 allowed.
+220-Local time is now 11:58. Server port: 21.
+220-IPv6 connections are also welcome on this server.
+220 You will be disconnected after 15 minutes of inactivity.
+USER 
+230 Anonymous user logged in
+TYPE I
+200 TYPE is now 8-bit binary
+CWD /
+250 OK. Current directory is /
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (128,148,32,111,197,47)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 3 matches total
+CWD //pub
+250 OK. Current directory is /pub
+PASV
+227 Entering Passive Mode (128,148,32,111,195,228)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 81 matches total
+CWD //u
+250 OK. Current directory is /u
+PASV
+227 Entering Passive Mode (128,148,32,111,196,47)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 51 matches total
+CWD //incoming
+250 OK. Current directory is /incoming
+PASV
+227 Entering Passive Mode (128,148,32,111,197,53)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 9049 matches total
+=======================Started connection to ftp.cs.brown.edu port 21 with user  and password =======================
+Time: Sat Apr 10 19:56:55 EEST 2021220---------- Welcome to Pure-FTPd [privsep] [TLS] ----------
+220-You are user number 3 of 50 allowed.
+220-Local time is now 12:56. Server port: 21.
+220-IPv6 connections are also welcome on this server.
+220 You will be disconnected after 15 minutes of inactivity.
+USER 
+230 Anonymous user logged in
+TYPE I
+200 TYPE is now 8-bit binary
+CWD /
+250 OK. Current directory is /
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (128,148,32,111,196,216)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 3 matches total
+CWD //incoming
+250 OK. Current directory is /incoming
+PASV
+227 Entering Passive Mode (128,148,32,111,195,103)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 9049 matches total
+QUIT
+221-Goodbye. You uploaded 0 and downloaded 0 kbytes.
+221 Logout.
+=======================Started connection to ftp.cs.brown.edu port 21 with user  and password =======================
+Time: Sat Apr 10 19:57:28 EEST 2021220---------- Welcome to Pure-FTPd [privsep] [TLS] ----------
+220-You are user number 3 of 50 allowed.
+220-Local time is now 12:57. Server port: 21.
+220-IPv6 connections are also welcome on this server.
+220 You will be disconnected after 15 minutes of inactivity.
+USER 
+230 Anonymous user logged in
+TYPE I
+200 TYPE is now 8-bit binary
+CWD /
+250 OK. Current directory is /
+SYST
+215 UNIX Type: L8
+PASV
+227 Entering Passive Mode (128,148,32,111,196,3)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 3 matches total
+CWD //u
+250 OK. Current directory is /u
+PASV
+227 Entering Passive Mode (128,148,32,111,196,234)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 51 matches total
+CWD //incoming
+250 OK. Current directory is /incoming
+PASV
+227 Entering Passive Mode (128,148,32,111,195,108)
+LIST
+150 Accepted data connection
+226-Options: -l 
+226 9049 matches total
+QUIT
+221-Goodbye. You uploaded 0 and downloaded 0 kbytes.
+221 Logout.

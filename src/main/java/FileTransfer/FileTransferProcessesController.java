@@ -34,21 +34,21 @@ public class FileTransferProcessesController implements Initializable
 //        processesStage.show();
     }
 
-    public int addProcess(String fileName, long size)
+    public int addProcess(String fileName, float size)
     {
         HBox box = new HBox();
         Label idLabel = new Label("" + id + ") ");
         Label fileNameLabel = new Label(fileName);
-        String[] s = {"B", "KB", "MB", "GB"};
-        String sizeStr;
-        int i = 0;
-        while(size >= 1024 && i < s.length){
-            i++;
-            size /= 1024;
-        }
-        sizeStr = size + " " + s[i];
+//        String[] s = {"B", "KB", "MB", "GB"};
+//        String sizeStr;
+//        int i = 0;
+//        while(size >= 1024 && i < s.length){
+//            i++;
+//            size /= 1024;
+//        }
+//        sizeStr = size + " " + s[i];
 
-        Label fileSizeLabel = new Label(" - " + sizeStr);
+        Label fileSizeLabel = new Label(String.valueOf(FileStructure.longToSizeString(size)));
 
         //Platform.runLater
         box.getChildren().addAll(idLabel, fileNameLabel, fileSizeLabel);

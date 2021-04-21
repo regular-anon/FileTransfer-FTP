@@ -1,21 +1,21 @@
 package FileTransfer;
 
+
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
-import javafx.collections.ObservableList;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
@@ -23,11 +23,11 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 //TODO: UI Themes, Log window
@@ -43,11 +43,15 @@ public class FileTransferController implements Initializable {
     public Menu menuPreferences;
     public ImageView dropImage;
     //    public Menu runningProcessesButton;
-    @FXML
-    private ListView list;
     private static boolean standby;
     private static UITask currentTask;
     public static FileTransferController instance;
+
+    public TableView<FileStructureInstance> tableView;
+    public TableColumn<FileStructureInstance, HBox> fileNameColumn;
+    public TableColumn<FileStructureInstance, String> sizeColumn;
+    public TableColumn<FileStructureInstance, String> lastModifiedColumn;
+
     private ContextMenu contextMenu = new ContextMenu();
 
     public static boolean onStandby()
@@ -79,37 +83,94 @@ public class FileTransferController implements Initializable {
     //@Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
 
-//        list.setCellFactory(lv -> {
-//
-//            ListCell<HBox> cell = new ListCell<>();
-//
-//            ContextMenu contextMenu = new ContextMenu();
-//
-//            MenuItem deleteItem = new MenuItem();
-////            deleteItem.textProperty().bind(Bindings.format("Delete \"%s\"", cell.itemProperty()));
-//            deleteItem.setText("Delete");
-//            deleteItem.setOnAction(event -> {
-//                list.getItems().remove(cell.getItem());
-//                //Delete file
-//                try {
-//                    Client.deleteFile(cell.getItem().getChildren().get(1).toString());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            });
-//            contextMenu.getItems().addAll(deleteItem);
-//
-////            cell.textProperty().bind(cell.itemProperty());
-//
-//            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
-//                if (isNowEmpty) {
-//                    cell.setContextMenu(null);
-//                } else {
-//                    cell.setContextMenu(contextMenu);
-//                }
-//            });
-//            return cell ;
-//        });
+        fileNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FileStructureInstance, HBox>, ObservableValue<HBox>>() {
+            @Override
+            public ObservableValue<HBox> call(TableColumn.CellDataFeatures<FileStructureInstance, HBox> param) {
+                if(param.getValue().getSize() == -1)
+                    return new ReadOnlyObjectWrapper(createParentDirectoryHBox());
+                return new ReadOnlyObjectWrapper(createHBox(param.getValue()));
+            }
+        });
+
+        sizeColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FileStructureInstance, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<FileStructureInstance, String> param) {
+                if(param.getValue().getSize() == -1)
+                    return new ReadOnlyStringWrapper("---");
+                return new ReadOnlyStringWrapper(FileStructure.longToSizeString(param.getValue().getSize()));
+            }
+        });
+
+            lastModifiedColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FileStructureInstance, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<FileStructureInstance, String> param) {
+                if(param.getValue().getSize() == -1)
+                    return new ReadOnlyStringWrapper("---");
+                return new ReadOnlyStringWrapper(new Date(param.getValue().lastModified).toString());
+            }
+        });
+        tableView.setOnMouseClicked(event -> {
+                contextMenu.hide();
+                contextMenu.getItems().clear();
+            if(event.getClickCount() > 1) {
+                //start task on changing directory here
+                System.out.println("File selected!");
+                String path = FileStructure.currentDirectory.getPath() + "/" + tableView.getSelectionModel().getSelectedItem().getName();
+                if(path == null || path == "")
+                    return;
+                try {
+                    UITask newTask = new UITask() {
+                        FileStructureInstance fsi;
+                        @Override public void exec() throws Exception
+                        {
+                            fsi = FileStructure.search(path);
+                            if(fsi instanceof DirectoryInstance) {
+                                DirectoryInstance dir = (DirectoryInstance) fsi;
+                                if(!dir.hasContent)
+                                    FileStructure.assignContents(dir, Client.getFTPClient());
+                            }
+                        }
+
+                        @Override public void execFinal() throws Exception
+                        {
+                            if(fsi instanceof FileInstance)
+                                return;
+                            DirectoryInstance dir = (DirectoryInstance) fsi;
+                            FileStructure.cd(dir);
+                            showDirectory(dir);
+                        }
+                    };
+
+                        enterStandbyMode(newTask);
+                    } catch (Exception e) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Warning");
+                        alert.setHeaderText("Cannot change the directory at the moment.");
+                        alert.setContentText(e.getMessage());
+                        alert.showAndWait();
+                        return;
+                    }
+            }
+            else if(event.getButton() == MouseButton.SECONDARY) {
+                System.out.println("Right click detected on element!");
+                MenuItem item = new MenuItem("Delete");
+                    item.setOnAction(event2 -> {
+                        System.out.println("Deleting file (s)...");
+                        for(int i = 0;i < tableView.getSelectionModel().getSelectedItems().size();++i) {
+                            try {
+                                FileStructureInstance fsi = tableView.getSelectionModel().getSelectedItems().get(i);
+                                if(fsi instanceof FileInstance)
+                                    Client.deleteFile((FileInstance)fsi);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    contextMenu.getItems().add(item);
+                    contextMenu.show(tableView, event.getScreenX() ,event.getScreenY());
+            }
+        });
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         contextMenu.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -118,7 +179,6 @@ public class FileTransferController implements Initializable {
             }
         });
         dropImage.setOpacity(0);
-//        imageViewProfile.imageProperty().unbind();
         menuPreferences.textProperty().unbind();
         instance = this;
         Image img = new Image("Photos/language.png");
@@ -133,97 +193,16 @@ public class FileTransferController implements Initializable {
                 UIController.setVisible("FileTransfer Settings");
             }
         });
-
-        list.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent click) {
-                contextMenu.hide();
-                contextMenu.getItems().clear();
-                if (click.getClickCount() == 2) {
-                    System.out.println("File selected!");
-                    String str;
-                    Object obj = list.getSelectionModel().getSelectedItem();
-                    HBox box = (HBox) obj;
-                    str = ((Label) box.getChildren().get(2)).getText();
-                    System.out.println("File name: " + str);
-                    if (str == null || str == "")
-                        return;
-                    try {
-                        UITask newTask;
-                        if (str.equals("..")) {
-                            newTask = new UITask() {
-                                public void exec() throws Exception {
-                                    System.out.println("Exec method of .. directory change.");
-                                }
-
-                                public void execFinal() throws Exception {
-                                    System.out.println("Started execFinal on ..");
-                                    FileStructure.cd("..");
-                                    showDirectory(FileStructure.currentDirectory);
-                                    System.out.println("Finished execFinal on ..");
-                                }
-                            };
-                        } else {
-                            newTask = new UITask() {
-                                public void exec() throws Exception {
-                                    System.out.println("Started exec on changing directory");
-                                    DirectoryInstance nextDir = (DirectoryInstance) FileStructure.searchInContentsOfDirectory(FileStructure.currentDirectory, str);
-                                    if (!nextDir.hasContent)
-                                        FileStructure.assignContents(nextDir, Client.getFTPClient());
-                                    System.out.println("Finished exec on changing directory");
-                                }
-
-                                public void execFinal() throws Exception {
-                                    System.out.println("Started execFinal on changing directory");
-                                    FileStructure.cd(FileStructure.currentDirectory.getPath() + "/" + str);
-                                    showDirectory(FileStructure.currentDirectory);
-                                    System.out.println("Finished execFinal on changing directory");
-                                }
-                            };
-                        }
-                        enterStandbyMode(newTask);
-                    } catch (Exception e) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Warning");
-                        alert.setHeaderText("Cannot change the directory at the moment.");
-                        alert.setContentText(e.getMessage());
-                        alert.showAndWait();
-                        return;
-                    }
-                }
-                else if(click.getButton() == MouseButton.SECONDARY) {
-                    System.out.println("Right click detected on element!");
-                    MenuItem item = new MenuItem("Delete");
-                    item.setOnAction(event -> {
-                        System.out.println("Deleting file (s)...");
-                        for(int i = 0;i < list.getSelectionModel().getSelectedItems().size();++i) {
-                            HBox box = (HBox) list.getSelectionModel().getSelectedItems().get(i);
-                            try {
-                                Client.deleteFile(((Label)(box.getChildren().get(2))).getText());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    contextMenu.getItems().add(item);
-                    contextMenu.show(list, click.getScreenX() ,click.getScreenY());
-                }
-            }
-        });
-        list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        list.setOnDragOver(new EventHandler<DragEvent>() {
+        tableView.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                if (event.getGestureSource() != list && event.getDragboard().hasFiles()) {
+                if (event.getGestureSource() != tableView && event.getDragboard().hasFiles()) {
                     event.acceptTransferModes(TransferMode.COPY);
-
-//                    dropImage.setOpacity(1);
                     FadeTransition ft = new FadeTransition();
                     ft.setNode(dropImage);
                     ft.setDuration(Duration.millis(100));
                     ft.setFromValue(dropImage.getOpacity());
                     ft.setToValue(1.0);
-//                    ft.setCycleCount(6);
                     ft.setAutoReverse(false);
 
                     ft.play();
@@ -232,34 +211,28 @@ public class FileTransferController implements Initializable {
                 event.consume();
             }
         });
-
-        list.setOnDragExited(new EventHandler<DragEvent>() {
+        tableView.setOnDragExited(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-//                dropImage.setOpacity(0);
                 FadeTransition ft = new FadeTransition();
                 ft.setNode(dropImage);
                 ft.setDuration(Duration.millis(100));
                 ft.setFromValue(dropImage.getOpacity());
                 ft.setToValue(0.0);
-//                ft.setCycleCount(6);
                 ft.setAutoReverse(false);
 
                 ft.play();
             }
         });
-
-        list.setOnDragDropped(new EventHandler<DragEvent>() {
+        tableView.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                if (event.getGestureSource() != list && event.getDragboard().hasFiles()) {
-//                    dropImage.setOpacity(0);
+                if (event.getGestureSource() != tableView && event.getDragboard().hasFiles()) {
                     FadeTransition ft = new FadeTransition();
                     ft.setNode(dropImage);
                     ft.setDuration(Duration.millis(100));
                     ft.setFromValue(dropImage.getOpacity());
                     ft.setToValue(0.0);
-//                    ft.setCycleCount(6);
                     ft.setAutoReverse(false);
 
                     ft.play();
@@ -278,119 +251,53 @@ public class FileTransferController implements Initializable {
                 }
             }
         });
-
-
-        //Set context menus for file deletion
-//        list.setCellFactory(new Callback<ListView, ListCell>() {
-//            @Override
-//            public ListCell call(ListView param) {
-//                return null;
-//            }
-//        });
     }
 
     public void showDirectory(DirectoryInstance dir)
     {
-        Platform.runLater(new Runnable(){
-            @Override
-            public void run() {
-                System.out.println("Showing different directory in the FileTransfer main window");
-                list.getItems().clear();
-
-                HBox box = new HBox();
-                ImageView imgView = new ImageView(new Image("Photos/folder.png"));
-                Label l = new Label("..");
-                imgView.setPreserveRatio(true);
-                imgView.setFitHeight(15);
-                box.getChildren().add(imgView);
-                box.getChildren().add(new Label(" "));
-                box.getChildren().add(l);
-                list.getItems().add(box);
-
-                //HBox[] content = new HBox[dir.getContents().size()];
-
-                for(int i = 0;i < dir.getContents().size();++i)
-                {
-                    //content[i] = createHBox(dir.getContents().get(i));
-                    if(dir.getContents().get(i).getName().equals("..") || dir.getContents().get(i).getName().equals("."))
-                        continue;
-//                    ContextMenu menu = new ContextMenu();
-//                    MenuItem item = new MenuItem("Delete");
-//                    item.setOnAction(new EventHandler<ActionEvent>() {
-//                        @Override
-//                        public void handle(ActionEvent event) {
-//                            System.out.println("Deleting file");
-//                        }
-//                    });
-//                    menu.getItems().addAll(item);
-                    HBox hbox = createHBox(dir.getContents().get(i));
-                    hbox.getChildren().get(2).setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-                        @Override
-                        public void handle(ContextMenuEvent event) {
-
-                        }
-                    });
-//                    (Label)(hbox.getChildren().get(2)).;
-//                    hbox.setOnMousePressed(new EventHandler<MouseEvent>() {
-//                        @Override
-//                        public void handle(MouseEvent event) {
-//                            if (event.isSecondaryButtonDown()) {
-//                                menu.show(hbox, event.getScreenX(), event.getScreenY());
-//                            }
-//                        }
-//                    });
-                    list.getItems().add(hbox);
-
-                    /*ContextMenu contextMenu = new ContextMenu();
-        MenuItem menuItem1 = new MenuItem("Choice 1");
-        MenuItem menuItem2 = new MenuItem("Choice 2");
-        MenuItem menuItem3 = new MenuItem("Choice 3");
-
-        menuItem3.setOnAction((event) -> {
-            System.out.println("Choice 3 clicked!");
-        });
-
-        contextMenu.getItems().addAll(menuItem1,menuItem2,menuItem3);
-
-        TextArea textArea = new TextArea();
-
-        textArea.setContextMenu(contextMenu);
-
-        VBox vBox = new VBox(textArea);
-        Scene scene = new Scene(vBox);
-
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("JavaFX App");
-
-        primaryStage.show();*/
-
-
-
-
-                }
-                pwdLabel.setText("Current Path: " + FileStructure.currentDirectory.getPath());
+        Platform.runLater(() -> {
+            tableView.getItems().clear();
+            FileStructureInstance fsi = new FileStructureInstance("..");
+            fsi.setSize(-1);
+            tableView.getItems().add(fsi);
+            for(int i = 0;i < dir.getContents().size();++i) {
+                tableView.getItems().add(dir.getContents().get(i));
             }
+
+            pwdLabel.setText("Current Path: " + FileStructure.currentDirectory.getPath());
         });
     }
+
+    private Image folderImage = new Image("Photos/folder.png");
+    private Image fileImage = new Image("Photos/file.png");
+    private Image arrowImage = new Image("Photos/up_arrow.png");
+
     private HBox createHBox(FileStructureInstance fsi)
     {
         HBox box = new HBox();
         Label l = new Label(fsi.getName());
         ImageView imgView;
         if(fsi instanceof DirectoryInstance)
-        {
-            imgView = new ImageView(new Image("Photos/folder.png"));
-        }
+            imgView = new ImageView(folderImage);
         else
-        {
-            imgView = new ImageView(new Image("Photos/file.png"));
-        }
+            imgView = new ImageView(fileImage);
         imgView.setPreserveRatio(true);
         imgView.setFitHeight(15);
         box.getChildren().add(imgView);
         box.getChildren().add(new Label(" "));
         box.getChildren().add(l);
+        return box;
+    }
 
+    private HBox createParentDirectoryHBox() {
+        HBox box = new HBox();
+        Label l = new Label("..");
+        ImageView imgView = new ImageView(arrowImage);
+        imgView.setPreserveRatio(true);
+        imgView.setFitHeight(15);
+        box.getChildren().add(imgView);
+        box.getChildren().add(new Label(" "));
+        box.getChildren().add(l);
         return box;
     }
 
@@ -415,42 +322,31 @@ public class FileTransferController implements Initializable {
 
     public void downloadPress(ActionEvent actionEvent)
     {
-        HBox box = (HBox) list.getSelectionModel().getSelectedItem();
-        String name;
-        try {
-            name = ((Label)box.getChildren().get(2)).getText();
-        }
-        catch(Exception e)
-        {
+        //Try to get the file instance without errors
+        if(tableView.getSelectionModel().getSelectedItems().size() == 0)
             return;
-        }
+        FileStructureInstance[] fileArr = new FileStructureInstance[tableView.getSelectionModel().getSelectedItems().size()];
+        tableView.getSelectionModel().getSelectedItems().toArray(fileArr);//(FileStructureInstance[]) tableView.getSelectionModel().getSelectedItems().toArray();
 
-        FileStructureInstance fsi = FileStructure.searchInContentsOfDirectory(FileStructure.currentDirectory, name);
-        if(fsi == null)
-        {
-            System.out.println("Unexpected errpr!");
-            return;
-        }
-
-        if(fsi instanceof FileInstance)
-        {
-            try {
-                Client.download((FileInstance)fsi, fsi.getName());
-            } catch (IOException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Dialog");
-                alert.setHeaderText("Could not download file");
-                alert.setContentText(e.getMessage());
-                alert.showAndWait();
+        for(int i = 0;i < fileArr.length;++i) {
+            if(fileArr[i] instanceof FileInstance) {
+                try {
+                Client.download((FileInstance)fileArr[i], fileArr[i].getName());
+                } catch (IOException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Dialog");
+                    alert.setHeaderText("Could not download file");
+                    alert.setContentText(e.getMessage());
+                    alert.showAndWait();
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
-            catch(Exception e)
-            {
-                e.printStackTrace();
+            else {
+                downloadDirectory((DirectoryInstance)fileArr[i], fileArr[i].getName());
             }
-        }
-        else
-        {
-            downloadDirectory((DirectoryInstance)fsi, fsi.getName());
         }
     }
 
@@ -487,8 +383,6 @@ public class FileTransferController implements Initializable {
         try {
             FileStructure.cd(searchField.getText());
             showDirectory(FileStructure.currentDirectory);
-
-//            searchField.setText("");
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
