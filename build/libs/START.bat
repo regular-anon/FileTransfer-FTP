@@ -1,1 +1,0 @@
-start javaw -jar FileTransfer-1.0.jar
