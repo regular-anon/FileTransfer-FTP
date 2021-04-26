@@ -35,7 +35,6 @@ public class FileStructure
     static void cd(DirectoryInstance dir) throws Exception {
         currentDirectory = dir;
     }
-
     static FileStructureInstance search(String rp) throws IOException {
         DirectoryInstance current = currentDirectory;
         if(rp.charAt(0) == '/')
