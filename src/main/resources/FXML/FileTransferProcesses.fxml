@@ -19,7 +19,7 @@
                   <Image url="@../Photos/change.png" />
                </image>
             </ImageView>
-            <Label text="Transfer List">
+            <Label id="TransferListTitle" text="Transfer List">
                <font>
                   <Font size="27.0" />
                </font>
@@ -35,7 +35,7 @@
       <Label />
       <HBox alignment="CENTER" prefHeight="24.0" prefWidth="600.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#closeWindow" text="Close" />
+            <Button id="TransfersCloseButton" mnemonicParsing="false" onAction="#closeWindow" text="Close" />
          </children>
       </HBox>
    </children>

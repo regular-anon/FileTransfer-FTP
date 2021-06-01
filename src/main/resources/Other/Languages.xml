@@ -16,23 +16,29 @@
         <LoginPassword>Password:</LoginPassword>
         <LoginClearButton>Clear</LoginClearButton>
         <LoginConnectButton>Connect</LoginConnectButton>
+        <TransferListTitle>Transfer List</TransferListTitle>
+        <TransfersCloseButton>Close</TransfersCloseButton>
+        <LoginTitleSubText>Quick and Simple!</LoginTitleSubText>
     </Language>
     
     <Language id="RO" fullName="Romana">
-        <TitleSubText>Simplu si Rapid!</TitleSubText>
-        <Download>Descarcati</Download>
-        <Upload>Incarcati</Upload>
-        <Preferences>Preferinte</Preferences>
-        <SearchButton>Cauta</SearchButton>
+        <TitleSubText>Simplu și Rapid!</TitleSubText>
+        <Download>Descărcați</Download>
+        <Upload>Încărcați</Upload>
+        <Preferences>Preferințe</Preferences>
+        <SearchButton>Caută</SearchButton>
         <TransferMenuButton>Transferuri</TransferMenuButton>
-        <SettingsTitle>Configurari</SettingsTitle>
+        <SettingsTitle>Configurări</SettingsTitle>
         <SettingsLanguage>Limbă</SettingsLanguage>
-        <LoginTitle>Pagina de logare</LoginTitle>
+        <LoginTitle>Pagină de logare</LoginTitle>
         <LoginHost>Server:</LoginHost>
         <LoginUsername>Utilizator:</LoginUsername>
-        <LoginPassword>Parola:</LoginPassword>
-        <LoginClearButton>Sterge</LoginClearButton>
+        <LoginPassword>Parolă:</LoginPassword>
+        <LoginClearButton>Șterge</LoginClearButton>
         <LoginConnectButton>Conectare</LoginConnectButton>
+        <TransferListTitle>Listă Transferuri</TransferListTitle>
+        <TransfersCloseButton>Închide</TransfersCloseButton>
+        <LoginTitleSubText>Simplu și Rapid!</LoginTitleSubText>
     </Language>
     
     <Language id="FR" fullName="Français">
@@ -50,6 +56,9 @@
         <LoginPassword>Mot de passe:</LoginPassword>
         <LoginClearButton>Effacer</LoginClearButton>
         <LoginConnectButton>Relier</LoginConnectButton>
+        <TransferListTitle>Liste des transferts</TransferListTitle>
+        <TransfersCloseButton>Fermer</TransfersCloseButton>
+        <LoginTitleSubText>Rapide et simple!</LoginTitleSubText>
     </Language>
     
     <Language id="DE" fullName="Deutsche">
@@ -67,5 +76,8 @@
         <LoginPassword>Passwort:</LoginPassword>
         <LoginClearButton>Löschen</LoginClearButton>
         <LoginConnectButton>Verbinden</LoginConnectButton>
+        <TransferListTitle>Transferliste</TransferListTitle>
+        <TransfersCloseButton>Schließen</TransfersCloseButton>
+        <LoginTitleSubText>Schnell und einfach!</LoginTitleSubText>
     </Language>
 </LanguageList>

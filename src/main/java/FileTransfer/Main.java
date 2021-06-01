@@ -31,6 +31,8 @@ public class Main extends Application {
     public static Stage mainStage, loginStage, processesStage, splashStage, settingsStage, logsStage;
     private static boolean hasIconTray = false;
 
+    //TODO: cancel transfer to change directory or execute other commands, then resume
+
     public Main() throws IOException {
         Platform.setImplicitExit(false);
         loginStage = openStageByFileName("FileTransferLogin.fxml", "FileTransfer Login", true);
@@ -46,7 +48,6 @@ public class Main extends Application {
         loginStage.setResizable(false);
         loginStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
-                System.out.println("Login Stage is closing");
                 Main.exit();
             }
         });
@@ -96,7 +97,7 @@ public class Main extends Application {
                     }
                 };
                 java.awt.PopupMenu popup = new java.awt.PopupMenu();
-                java.awt.MenuItem defaultItem = new java.awt.MenuItem("Close");
+                java.awt.MenuItem defaultItem = new java.awt.MenuItem("Exit");
                 defaultItem.addActionListener(listener);
                 popup.add(defaultItem);
                 trayIcon = new java.awt.TrayIcon(image, "FileTransfer", popup);
@@ -135,12 +136,10 @@ public class Main extends Application {
     }
 
     public static void exit() {
-        System.out.println("Trying to exit application");
         FileTransferSettingsController.instance.saveSettings();
         FileStructure.currentDirectory = FileStructure.rootDirectory;
         if(Client.isConnected())
         {
-            System.out.println("But client is connected!!");
             if(FileTransferManager.instance.isRunning()) //FileTransferManager.instance != null && FileTransferManager.instance.isRunning()
             {
                 //Alert user
@@ -153,26 +152,20 @@ public class Main extends Application {
                 {
                     tray.remove(trayIcon);
                     System.out.println("Pressed Finish button...");
-//                    System.exit(0);
                     try {
                         Client.close();
-                        System.out.println("Closed client - line 158");
                         UIController.hideAllStages();
                         Platform.exit();
                         System.exit(0);
                     } catch (Exception e) {
-                        System.out.println("Error caught in Main.exit() method!");
                         e.printStackTrace();
                     }
                 }
                 else
-                {
                     return;
-                }
             }
             else
             {
-                System.out.println("Transfer manager is not running, but trying to disconnect...");
                 try {
                     tray.remove(trayIcon);
                     Client.close();
@@ -182,10 +175,10 @@ public class Main extends Application {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                System.out.println("Done disconnecting...");
             }
         }
         UIController.hideAllStages();
+        Platform.exit();
         System.exit(0);
     }
 
@@ -202,15 +195,12 @@ public class Main extends Application {
                 path += home.charAt(i);
         }
         Client.setDownloadsPath(path);
+        new Thread(new DeveloperConsole()).start();
     }
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
-    {
-//        new Thread(new DeveloperConsole()).start();
-        launch(args);
-    }
+    public static void main(String[] args) { launch(args); }
 }
 
 //Console for testing (console I/O)
@@ -251,6 +241,19 @@ class DeveloperConsole implements Runnable
                         e.printStackTrace();
                     }
                     break;
+                case "pause":
+                    try {
+                        FileTransferManager.instance.stopClient();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "resume":
+                    try {
+                        FileTransferManager.instance.startClient();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 default:
                     if(input.startsWith("cd "))
                     {

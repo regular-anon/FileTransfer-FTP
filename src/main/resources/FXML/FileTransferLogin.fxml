@@ -27,7 +27,7 @@
             </Label>
          </children>
       </HBox>
-      <Label alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="270.0" text="Quick and simple !">
+      <Label id="LoginTitleSubText" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="270.0" text="Quick and simple !">
          <font>
             <Font size="14.0" />
          </font>

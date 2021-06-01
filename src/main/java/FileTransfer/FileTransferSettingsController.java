@@ -17,10 +17,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -37,6 +34,8 @@ public class FileTransferSettingsController  implements Initializable
     public Language currentLanguage;
 
     public static FileTransferSettingsController instance;
+    public Slider slider;
+    public Label valueLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -56,6 +55,11 @@ public class FileTransferSettingsController  implements Initializable
             });
         }
         parsePropFile();
+
+        slider.valueProperty().addListener(((observable, oldValue, newValue) -> {
+            valueLabel.setText(newValue.intValue() + "");
+            FileTransferManager.setMaxBufferSize(newValue.intValue());
+        }));
 //        ((Labeled)(UIController.getStages().get("FileTransfer").getScene().lookup("#Preferences"))).setText("Preferinte maii");
 //        Scene s = UIController.getStages().get("FileTransfer").getScene();
 //        HashMap <>s = UIController.getStages();
@@ -76,6 +80,21 @@ public class FileTransferSettingsController  implements Initializable
                                 changeDisplayLanguage(lang);
                             }
                         });
+                        break;
+                    case "MaxBuffSize":
+                        int fileValue = 16384;
+                        try {
+                            fileValue = Integer.valueOf(p[1]);
+                        }
+                        catch(NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                        if(!(fileValue < 32768 && fileValue > 511)) {
+                            fileValue = 16384;
+                        }
+                        FileTransferManager.setMaxBufferSize(fileValue);
+                        slider.setValue(fileValue);
+                        valueLabel.setText(fileValue + "");
                 }
             }
         }
@@ -97,6 +116,7 @@ public class FileTransferSettingsController  implements Initializable
             File f = new File("src/main/resources/Other/user_settings.txt");
             fw = new FileWriter(f);
             fw.write("Language=" + currentLanguage.getName());
+            fw.write("\nMaxBuffSize=" + (int)slider.getValue());
         }
         catch (IOException e) {
             e.printStackTrace();
