@@ -12,7 +12,8 @@ apply plugin: 'application'
 //apply plugin: 'idea' //////////
 
 
-mainClassName = 'FileTransfer.Main'
+
+mainClassName = 'Main.Main'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
@@ -28,13 +29,14 @@ dependencies {
 //    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
 //    compile 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
     compile 'commons-net:commons-net:3.7.2'
+    compile 'org.openjfx:javafx:17-ea+13'
 }
 
 
 
 jar {
     manifest {
-        attributes "Main-Class": "FileTransfer.Main"
+        attributes "Main-Class": "Main.Main"
     }
 
     from {
@@ -42,5 +44,5 @@ jar {
     }
 }
 application{
-    mainClassName = "FileTransfer.Main"
+    mainClassName = "Main.Main"
 }

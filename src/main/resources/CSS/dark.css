@@ -1,0 +1,55 @@
+
+#decorated-anchorpane{
+    -fx-border-color:  derive(-fx-color, -20%) derive(-fx-color, -20%) derive(-fx-color, -20%) derive(-fx-color, -20%);
+}
+
+.root {
+    -fx-base: #3f474f;
+    -fx-accent: #e7eff7 ;
+    -fx-default-button: #7f878f ;
+    -fx-focus-color: #efefef;
+    -fx-faint-focus-color: #efefef22;
+    -fx-focused-text-base-color : ladder(
+            -fx-selection-bar,
+            -fx-light-text-color 45%,
+            -fx-dark-text-color 46%,
+            -fx-dark-text-color 59%,
+            -fx-mid-text-color 60%
+        );
+    -fx-focused-mark-color : -fx-focused-text-base-color ;
+
+}
+
+.text-input:focused {
+    -fx-highlight-text-fill: ladder(
+        -fx-highlight-fill,
+        -fx-light-text-color 45%,
+        -fx-dark-text-color  46%,
+        -fx-dark-text-color  59%,
+        -fx-mid-text-color   60%
+    );
+}
+
+.tree-cell .label {
+    -fx-text-fill: white;
+}
+
+.tree-cell:focused {
+    -fx-background-color: derive(-fx-color, +30%);
+}
+
+.table-row-cell .label {
+    -fx-text-fill: white;
+}
+
+
+//.table-row-cell
+//.table-view
+
+.table-row-cell:focused {
+    -fx-background-color: derive(-fx-color, +30%);
+}
+
+.text-field {
+    -fx-text-fill: white;
+}
