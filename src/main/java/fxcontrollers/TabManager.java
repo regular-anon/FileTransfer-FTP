@@ -249,6 +249,7 @@ public class TabManager {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Resource File");
             List<File> files = fileChooser.showOpenMultipleDialog(MainFXMLController.instance.tabPane.getScene().getWindow());//fileChooser.showOpenMultipleDialog(UIController.getStages().get("FileTransfer"));
+            if(files == null) return;
             for(int i = 0;i < files.size(); ++i) {
                     client.addTask(new FTPTask(files.get(i)) {
                         @Override

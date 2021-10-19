@@ -147,7 +147,7 @@ public class Client
 
             };
             pw.write("=======================Started connection to " + server + " port " + port + " with user " + user + " and password " + password + "=======================\n");
-            pw.write("Time: " + new java.util.Date(System.currentTimeMillis()).toString());
+            pw.write("Time: " + new java.util.Date(System.currentTimeMillis()).toString() + "\n");
             ftp.addProtocolCommandListener(new ProtocolCommandListener() {
                 @Override
                 public void protocolCommandSent(ProtocolCommandEvent protocolCommandEvent) {

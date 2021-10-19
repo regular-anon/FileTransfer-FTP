@@ -13,6 +13,7 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -219,12 +220,14 @@ public class MainFXMLController implements Initializable {
             Parent p = (Parent)FXMLLoader.load(new File("src/main/resources/FXML/FileTransferLogs.fxml").toURI().toURL());
             Scene sc = new Scene(p);
             logStage = new Stage();
+            logStage.setResizable(false);
             logStage.setScene(sc);
             logStage.getIcons().add(new Image("Photos/cloud.png"));
             logStage.setTitle("Logs");
             FileTransferLogsController logsController = new FileTransferLogsController(logStage);
 
             settingsStage = new Stage();
+            settingsStage.setResizable(false);
             settingsStage.setScene(new Scene(FXMLLoader.load(new File("src/main/resources/FXML/Settings.fxml").toURI().toURL())));
             settingsStage.setTitle("Settings");
             settingsStage.getIcons().add(new Image("Photos/cloud.png"));
@@ -258,7 +261,7 @@ public class MainFXMLController implements Initializable {
         helpMenuContainerPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                File htmlFile = new File("src/main/resources/Other/help.html");
+                File htmlFile = new File("src/main/resources/Other/help_page/help.html");
                 try {
                     Desktop.getDesktop().browse(htmlFile.toURI());
                 } catch (IOException e) {
@@ -433,37 +436,38 @@ public class MainFXMLController implements Initializable {
     }
 
     public void setLightMode() {
-
-//        stage.hide();
-//        logStage.hide();
-//        settingsStage.hide();
-
         treeView.getScene().getStylesheets().clear();
+        treeView.getScene().getRoot().setStyle("");
         treeView.getScene().getStylesheets().add("CSS/light.css");
         logStage.getScene().getStylesheets().clear();
         settingsStage.getScene().getStylesheets().clear();
         transferStage.getScene().getStylesheets().clear();
-
-//        stage.show();
-//        logStage.show();
-//        settingsStage.show();
     }
 
     public void setDarkMode() {
-
-//        stage.hide();
-//        logStage.hide();
-//        settingsStage.hide();
-
         treeView.getScene().getStylesheets().clear();
+        treeView.getScene().getRoot().setStyle("");
         treeView.getScene().getStylesheets().add("CSS/dark.css");
         logStage.getScene().getStylesheets().add("CSS/dark.css");
         settingsStage.getScene().getStylesheets().add("CSS/dark.css");
         transferStage.getScene().getStylesheets().add("CSS/dark.css");
+    }
 
-//        stage.show();
-//        logStage.show();
-//        settingsStage.show();
+    public void setColor(javafx.scene.paint.Color c) {
+        System.out.printf("RGB Values: %s %s %s\n", c.getRed(), c.getGreen(), c.getBlue());
+
+//        treeView.getScene().getStylesheets().add();
+//        treeView.getScene().getStylesheets().clear();
+//        treeView.getScene().getStylesheets().
+        Node root = treeView.getScene().getRoot();
+        String rgbCSSString = String.format("rgb(%d, %d, %d)", (int)(c.getRed() * 255), (int)(c.getGreen() * 255), (int)(c.getBlue() * 255));
+        System.out.println(rgbCSSString);
+        root.setStyle(String.format("; -fx-base: %s;", rgbCSSString) + " -fx-background-color: -fx-outer-border, -fx-inner-border, derive(-fx-color, +20%);");
+        logStage.getScene().getRoot().setStyle(String.format("; -fx-base: %s; -fx-color: %s;", rgbCSSString, rgbCSSString));
+        settingsStage.getScene().getRoot().setStyle(String.format("; -fx-base: %s; -fx-color: %s;", rgbCSSString, rgbCSSString));
+        transferStage.getScene().getRoot().setStyle(String.format("; -fx-base: %s; -fx-color: %s;", rgbCSSString, rgbCSSString));
+
+
     }
 
     public List<TabManager> getTabs() {

@@ -1,0 +1,1 @@
+{"Transfer Count":2,"Transfers":[{"Remote Host":"192.168.100.254","Size":"658.00 B","File name":"black.png"},{"Remote Host":"192.168.100.254","Size":"510.00 B","File name":"test2"}],"Time":"Wed Sep 22 20:07:02 EEST 2021"}

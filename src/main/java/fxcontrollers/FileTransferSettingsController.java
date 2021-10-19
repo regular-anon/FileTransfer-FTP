@@ -2,9 +2,13 @@ package fxcontrollers;
 
 import com.filetransfer.util.FileTransferManager;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class FileTransferSettingsController {
 
@@ -13,7 +17,7 @@ public class FileTransferSettingsController {
 
     public Slider slider;
     public RadioButton lightButton, darkButton;
-    public Button closeButton;
+    public Button closeButton, colorPickerButton;
     public Label bytesString;
 
     public ToggleGroup group;
@@ -28,6 +32,7 @@ public class FileTransferSettingsController {
         darkButton = (RadioButton) stage.getScene().lookup("#darkButton");
         closeButton = (Button) stage.getScene().lookup("#closeButton");
         bytesString = (Label) stage.getScene().lookup("#bytesString");
+        colorPickerButton = (Button) stage.getScene().lookup("#colorPickerButton");
 
         //Max: 32_767
         //Default: 16_384
@@ -67,6 +72,43 @@ public class FileTransferSettingsController {
             public void handle(ActionEvent event) {
                 System.out.println("Dark button selected!");
                 MainFXMLController.instance.setDarkMode();
+            }
+        });
+
+        colorPickerButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+//                ColorPicker colorPicker = new ColorPicker();
+//                colorPicker.setValue(Color.BLUE);
+//
+//                colorPicker.show();
+//
+//                colorPicker.setOnAction(new EventHandler() {
+//                    public void handle(Event t) {
+//                        System.out.println("Color picker handle().");
+//                    }
+//                });
+
+                ColorPicker colorPicker = new ColorPicker();
+
+                Scene scene = new Scene(colorPicker);
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+
+                colorPicker.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        //Do something with color
+
+                        MainFXMLController.instance.setColor(colorPicker.getValue());
+
+                        stage.close();
+                    }
+                });
+
+                stage.showAndWait();
+
             }
         });
     }

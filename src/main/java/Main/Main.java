@@ -15,7 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
-public class Main extends Application {
+public class Main extends Application { 
 
     public static boolean backgroundTask = false;
     private static TrayIcon trayIcon;
