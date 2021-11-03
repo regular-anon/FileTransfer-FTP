@@ -35,11 +35,11 @@ public class Main extends Application {
         primaryStage.setScene(mainScene);
 
         //Title and image
-        primaryStage.setTitle("FileTransfer");
+        primaryStage.setTitle("FTPImpulse");
 
         primaryStage.minHeightProperty().set(680);
         primaryStage.minWidthProperty().set(1100);
-        primaryStage.getIcons().add(new Image("Photos/cloud.png"));
+        primaryStage.getIcons().add(new Image("Photos/impulse_cloud.png"));
         primaryStage.show();
 
         MainFXMLController.instance.stage = primaryStage;
@@ -70,7 +70,7 @@ public class Main extends Application {
             menuItem.addActionListener(listener);
             popup.add(menuItem);
 
-            trayIcon = new TrayIcon(image, "FileTransfer");
+            trayIcon = new TrayIcon(image, "FTPImpulse");
             trayIcon.setPopupMenu(popup);
             trayIcon.addMouseListener(new MouseListener() {
                 @Override
