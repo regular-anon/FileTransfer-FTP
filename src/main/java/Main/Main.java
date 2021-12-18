@@ -47,7 +47,7 @@ public class Main extends Application {
         if(SystemTray.isSupported()) {
             backgroundTask = true;
             SystemTray tray = SystemTray.getSystemTray();
-            java.awt.Image image = java.awt.Toolkit.getDefaultToolkit().getImage("src/main/resources/Photos/cloud_white.gif");
+            java.awt.Image image = java.awt.Toolkit.getDefaultToolkit().getImage("src/main/resources/Photos/impulse_cloud.png");
 
             java.awt.event.ActionListener listener = new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {

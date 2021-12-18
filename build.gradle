@@ -43,6 +43,10 @@ jar {
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
+
+    from ("src/main/java") {
+        include 'resources/**'
+    }
 }
 application{
     mainClassName = "Main.Main"

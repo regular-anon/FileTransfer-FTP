@@ -33,6 +33,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -261,10 +262,11 @@ public class MainFXMLController implements Initializable {
         helpMenuContainerPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                File htmlFile = new File("src/main/resources/Other/help_page/help.html");
                 try {
-                    Desktop.getDesktop().browse(htmlFile.toURI());
+                    Desktop.getDesktop().browse(new URL("https://ftpimpulse.my-free.website/").toURI());
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
             }
