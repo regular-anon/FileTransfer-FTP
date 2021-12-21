@@ -58,7 +58,7 @@ public class TransferStageController {
             public ObservableValue<Label> call(TableColumn.CellDataFeatures<FileTransferProcess, Label> param) {
                 FileTransferProcess fp = param.getValue();
                 //Check for download or upload
-                return new ReadOnlyObjectWrapper(new Label(fp.getFile().getName()));
+                return new ReadOnlyObjectWrapper(new Label(((param.getValue().isDownload()) ? "Download: " : "Upload: ") + fp.getFile().getName()));
             }
         });
 

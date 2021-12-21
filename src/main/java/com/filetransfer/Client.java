@@ -285,6 +285,7 @@ public class Client
 //        fp.setId(FileTransferProcessesController.instance.addProcess(fp));
         ftp.allo(fp.getFile().length());
         FileTransferManager.addProcess(fp);
+        TransferStageController.instance.addFileTransferProcess(fp);
         if(!FileTransferManager.isRunning())
         {
             FileTransferManager.startTransfer();
