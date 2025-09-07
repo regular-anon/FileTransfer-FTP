@@ -122,7 +122,12 @@ public class Client
             File f = new File("src/main/resources/Other/Logs/" + user + "@" + server + ".txt");
             if(!f.exists()) {
                 System.out.println(f.getPath());
-                File tempFile = new File(f.getPath().substring(0, f.getPath().lastIndexOf('\\')));
+                // File tempFile = new File(f.getPath().substring(0, f.getPath().lastIndexOf('/')));
+                File tempFile;
+                if (f.getPath().lastIndexOf('/') == -1)
+                    tempFile = new File(f.getPath().substring(0, f.getPath().lastIndexOf('\\')));
+                else
+                    tempFile = new File(f.getPath().substring(0, f.getPath().lastIndexOf('/')));
                 System.out.println(tempFile.getPath());
                 tempFile.mkdirs();
                 f.createNewFile();
